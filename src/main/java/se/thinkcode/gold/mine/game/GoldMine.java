@@ -1,4 +1,7 @@
-package se.thinkcode.gold.mine;
+package se.thinkcode.gold.mine.game;
+
+import se.thinkcode.gold.mine.model.Position;
+import se.thinkcode.gold.mine.model.View;
 
 public class GoldMine {
     private final char[][] map;

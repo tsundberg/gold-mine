@@ -1,6 +1,8 @@
-package se.thinkcode.gold.mine;
+package se.thinkcode.gold.mine.game;
 
 import org.junit.jupiter.api.Test;
+import se.thinkcode.gold.mine.model.Position;
+import se.thinkcode.gold.mine.model.View;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
