@@ -20,6 +20,14 @@ public class GoldMineTest {
             XXXXX
             """);
 
+    private final Level level2 = new Level("""
+            XXXXX
+            X   X
+            X H X
+            X   E
+            XXXXX
+            """);
+
     @Test
     void should_see_wall_to_the_left_level_0() {
         View expected = new View("Wall");
@@ -61,7 +69,7 @@ public class GoldMineTest {
     }
 
     @Test
-    void should_see_wall_to_the_left_level_1() {
+    void should_not_see_wall_to_the_left_level_1() {
         View expected = new View("Empty");
         GoldMine goldMine = new GoldMine(level1);
 
@@ -71,7 +79,7 @@ public class GoldMineTest {
     }
 
     @Test
-    void should_see_wall_to_the_right_level_1() {
+    void should_not_see_wall_to_the_right_level_1() {
         View expected = new View("Empty");
         GoldMine goldMine = new GoldMine(level1);
 
@@ -81,7 +89,7 @@ public class GoldMineTest {
     }
 
     @Test
-    void should_see_wall_up_level_1() {
+    void should_not_see_wall_up_level_1() {
         View expected = new View("Empty");
         GoldMine goldMine = new GoldMine(level1);
 
@@ -91,12 +99,70 @@ public class GoldMineTest {
     }
 
     @Test
-    void should_see_wall_down_level_1() {
+    void should_not_see_wall_down_level_1() {
         View expected = new View("Empty");
         GoldMine goldMine = new GoldMine(level1);
 
         View actual = goldMine.lookDown();
 
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    void should_get_current_position() {
+        GoldMine goldMine = new GoldMine(level0);
+
+        Position actual = goldMine.currentPosition();
+
+        assertThat(actual).isEqualTo(new Position(1, 1));
+    }
+
+    @Test
+    void should_move_to_the_left() {
+        GoldMine goldMine = new GoldMine(level1);
+
+        goldMine.moveLeft();
+        Position actual = goldMine.currentPosition();
+
+        assertThat(actual).isEqualTo(new Position(1, 2));
+    }
+
+    @Test
+    void should_move_to_the_right() {
+        GoldMine goldMine = new GoldMine(level1);
+
+        goldMine.moveRight();
+        Position actual = goldMine.currentPosition();
+
+        assertThat(actual).isEqualTo(new Position(3, 2));
+    }
+
+    @Test
+    void should_move_up() {
+        GoldMine goldMine = new GoldMine(level1);
+
+        goldMine.moveUp();
+        Position actual = goldMine.currentPosition();
+
+        assertThat(actual).isEqualTo(new Position(2, 1));
+    }
+
+    @Test
+    void should_move_down() {
+        GoldMine goldMine = new GoldMine(level1);
+
+        goldMine.moveDown();
+        Position actual = goldMine.currentPosition();
+
+        assertThat(actual).isEqualTo(new Position(2, 3));
+    }
+
+    @Test
+    void should_find_exit() {
+        GoldMine goldMine = new GoldMine(level2);
+
+        View actual = goldMine.getView(3, 4);
+
+        assertThat(actual).isEqualTo(new View("Exit"));
     }
 }
