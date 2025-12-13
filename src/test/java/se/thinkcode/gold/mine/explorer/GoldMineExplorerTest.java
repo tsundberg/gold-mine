@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import se.thinkcode.gold.mine.game.GoldMine;
 import se.thinkcode.gold.mine.game.Level;
 import se.thinkcode.gold.mine.model.Position;
+import se.thinkcode.gold.mine.model.View;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -18,17 +19,178 @@ public class GoldMineExplorerTest {
             """);
 
     @Test
-    void should_explore_level_1() {
-        Position expected = new Position(4, 3);
+    void should_got_to_exit_level_one() {
         GoldMine goldMine = new GoldMine(level1);
 
         GoldMineExplorer explorer = new GoldMineExplorer(goldMine);
 
-        explorer.down();
-        explorer.right();
+        Position actualDown = explorer.down();
+        Position actuaRight = explorer.right();
+        View actualExit = explorer.lookRight();
 
-        Position actual = explorer.getExti();
+        assertThat(actualDown).isEqualTo(new Position(2, 3));
+        assertThat(actuaRight).isEqualTo(new Position(3, 3));
+        assertThat(actualExit).isEqualTo(new View("Exit"));
+    }
 
-        assertThat(actual).isEqualTo(expected);
+    @Test
+    void should_got_to_exit_level_the_a_long_way() {
+        GoldMine goldMine = new GoldMine(level1);
+
+        GoldMineExplorer explorer = new GoldMineExplorer(goldMine);
+
+
+        Position actualPosition = explorer.up();
+        Position expected = new Position(2, 1);
+        assertThat(actualPosition).isEqualTo(expected);
+
+        View actualView = explorer.lookUp();
+        View expectedView = new View("Wall");
+        assertThat(actualView).isEqualTo(expectedView);
+
+        actualView = explorer.lookRight();
+        expectedView = new View("Empty");
+        assertThat(actualView).isEqualTo(expectedView);
+
+        actualView = explorer.lookLeft();
+        expectedView = new View("Empty");
+        assertThat(actualView).isEqualTo(expectedView);
+
+        actualView = explorer.lookDown();
+        expectedView = new View("Home");
+        assertThat(actualView).isEqualTo(expectedView);
+
+
+        actualPosition = explorer.left();
+        expected = new Position(1, 1);
+        assertThat(actualPosition).isEqualTo(expected);
+
+        actualView = explorer.lookUp();
+        expectedView = new View("Wall");
+        assertThat(actualView).isEqualTo(expectedView);
+
+        actualView = explorer.lookRight();
+        expectedView = new View("Empty");
+        assertThat(actualView).isEqualTo(expectedView);
+
+        actualView = explorer.lookLeft();
+        expectedView = new View("Wall");
+        assertThat(actualView).isEqualTo(expectedView);
+
+        actualView = explorer.lookDown();
+        expectedView = new View("Empty");
+        assertThat(actualView).isEqualTo(expectedView);
+
+
+        actualPosition = explorer.down();
+        expected = new Position(1, 2);
+        assertThat(actualPosition).isEqualTo(expected);
+
+        actualView = explorer.lookUp();
+        expectedView = new View("Empty");
+        assertThat(actualView).isEqualTo(expectedView);
+
+        actualView = explorer.lookRight();
+        expectedView = new View("Home");
+        assertThat(actualView).isEqualTo(expectedView);
+
+        actualView = explorer.lookLeft();
+        expectedView = new View("Wall");
+        assertThat(actualView).isEqualTo(expectedView);
+
+        actualView = explorer.lookDown();
+        expectedView = new View("Empty");
+        assertThat(actualView).isEqualTo(expectedView);
+
+
+        actualPosition = explorer.down();
+        expected = new Position(1, 3);
+        assertThat(actualPosition).isEqualTo(expected);
+
+        actualView = explorer.lookUp();
+        expectedView = new View("Empty");
+        assertThat(actualView).isEqualTo(expectedView);
+
+        actualView = explorer.lookRight();
+        expectedView = new View("Empty");
+        assertThat(actualView).isEqualTo(expectedView);
+
+        actualView = explorer.lookLeft();
+        expectedView = new View("Wall");
+        assertThat(actualView).isEqualTo(expectedView);
+
+        actualView = explorer.lookDown();
+        expectedView = new View("Wall");
+        assertThat(actualView).isEqualTo(expectedView);
+
+
+        actualPosition = explorer.right();
+        expected = new Position(2, 3);
+        assertThat(actualPosition).isEqualTo(expected);
+
+        actualView = explorer.lookUp();
+        expectedView = new View("Home");
+        assertThat(actualView).isEqualTo(expectedView);
+
+        actualView = explorer.lookRight();
+        expectedView = new View("Empty");
+        assertThat(actualView).isEqualTo(expectedView);
+
+        actualView = explorer.lookLeft();
+        expectedView = new View("Empty");
+        assertThat(actualView).isEqualTo(expectedView);
+
+        actualView = explorer.lookDown();
+        expectedView = new View("Wall");
+        assertThat(actualView).isEqualTo(expectedView);
+
+
+        actualPosition = explorer.right();
+        expected = new Position(3, 3);
+        assertThat(actualPosition).isEqualTo(expected);
+
+        actualView = explorer.lookUp();
+        expectedView = new View("Empty");
+        assertThat(actualView).isEqualTo(expectedView);
+
+        actualView = explorer.lookRight();
+        expectedView = new View("Exit");
+        assertThat(actualView).isEqualTo(expectedView);
+
+        actualView = explorer.lookLeft();
+        expectedView = new View("Empty");
+        assertThat(actualView).isEqualTo(expectedView);
+
+        actualView = explorer.lookDown();
+        expectedView = new View("Wall");
+        assertThat(actualView).isEqualTo(expectedView);
+    }
+
+
+    @Test
+    void should_clear_screen_on_a_vt_100_terminal() {
+        GoldMine goldMine = new GoldMine(level1);
+
+        String actual = GoldMineExplorer.clearScreen();
+
+        assertThat(actual).isEqualTo("[2J");
+    }
+
+    @Test
+    void should_send_cursor_to_home_on_a_vt_100_terminal() {
+        GoldMine goldMine = new GoldMine(level1);
+
+        String actual = GoldMineExplorer.cursorHome();
+
+        assertThat(actual).isEqualTo("[H");
+    }
+
+    @Test
+    void should_send_cursor_to_x_and_y_coordinates_on_a_vt_100_terminal() {
+        GoldMine goldMine = new GoldMine(level1);
+
+        String actual = GoldMineExplorer.cursorTo(1, 2);
+
+        assertThat(actual).isEqualTo("[1;2H");
     }
 }

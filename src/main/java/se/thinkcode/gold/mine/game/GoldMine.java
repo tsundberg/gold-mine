@@ -105,6 +105,9 @@ public class GoldMine {
         if (map[y][x] == 'E') {
             return new View("Exit");
         }
+        if (map[y][x] == 'H') {
+            return new View("Home");
+        }
         if (map[y][x] == ' ') {
             return new View("Empty");
         }

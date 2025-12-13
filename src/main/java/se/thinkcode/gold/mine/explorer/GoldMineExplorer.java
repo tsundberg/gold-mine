@@ -16,17 +16,54 @@ public class GoldMineExplorer {
         return exit;
     }
 
-    public void down() {
-        goldMine.moveDown();
+    public Position up() {
+        goldMine.moveUp();
+        return goldMine.currentPosition();
     }
 
-    public void right() {
-        goldMine.moveRight();
+    public Position down() {
+        goldMine.moveDown();
+        return goldMine.currentPosition();
+    }
 
-        View view = goldMine.lookRight();
-        if (view.equals(new View("Exit"))) {
-            Position current = goldMine.currentPosition();
-            exit = new Position(current.x() + 1, current.y());
-        }
+    public Position right() {
+        goldMine.moveRight();
+        return goldMine.currentPosition();
+    }
+
+    public Position left() {
+        goldMine.moveLeft();
+        return goldMine.currentPosition();
+    }
+
+    public View lookUp() {
+        return goldMine.lookUp();
+    }
+
+    public View lookRight() {
+        return goldMine.lookRight();
+    }
+
+    public View lookLeft() {
+        return goldMine.lookLeft();
+    }
+
+    public View lookDown() {
+        return goldMine.lookDown();
+    }
+
+    static String clearScreen() {
+        // https://espterm.github.io/docs/VT100%20escape%20codes.html
+        // https://stackoverflow.com/questions/48773272/write-print-to-the-bottom-of-terminal
+
+        return "\033[2J";
+    }
+
+    static String cursorHome() {
+        return "\033[H";
+    }
+
+    static String cursorTo(int row, int column) {
+        return String.format("\033[%d;%dH", row, column);
     }
 }
