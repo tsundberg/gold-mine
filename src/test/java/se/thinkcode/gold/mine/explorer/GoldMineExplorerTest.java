@@ -166,7 +166,6 @@ public class GoldMineExplorerTest {
         assertThat(actualView).isEqualTo(expectedView);
     }
 
-
     @Test
     void should_clear_screen_on_a_vt_100_terminal() {
         GoldMine goldMine = new GoldMine(level1);
