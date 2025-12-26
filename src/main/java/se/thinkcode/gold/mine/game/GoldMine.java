@@ -88,6 +88,13 @@ public class GoldMine {
         return candidate != 'X';
     }
 
+    public View look() {
+        int x = position.x();
+        int y = position.y();
+
+        return getView(y, x);
+    }
+
     public View lookLeft() {
         int x = position.x() - 1;
         int y = position.y();

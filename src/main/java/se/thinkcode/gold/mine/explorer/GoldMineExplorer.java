@@ -31,6 +31,48 @@ public class GoldMineExplorer {
         position = exploreDown(position, exit);
         position = exploreRight(position, exit);
         position = exploreUp(position, exit);
+
+        Position unknownPosition = unknown();
+        while (unknownPosition != null) {
+            visit(unknownPosition);
+            look();
+            unknownPosition = unknown();
+        }
+    }
+
+    private void visit(Position position) {
+        Position currentPosition = goldMine.currentPosition();
+
+        while (!position.equals(currentPosition)) {
+            if (currentPosition.y() - position.y() > 0) {
+                up();
+            }
+            if (currentPosition.y() - position.y() < 0) {
+                down();
+            }
+
+            if (currentPosition.x() - position.x() > 0) {
+                left();
+            }
+            if (currentPosition.x() - position.x() < 0) {
+                right();
+            }
+
+            currentPosition = goldMine.currentPosition();
+        }
+    }
+
+    private Position unknown() {
+        for (int y = 1; y < maxDimension.y() - 1; y++) {
+            for (int x = 1; x < maxDimension.x() - 1; x++) {
+                View view = map[y][x];
+                if (view == null) {
+                    return new Position(x, y);
+                }
+            }
+        }
+
+        return null;
     }
 
     private Position exploreLeft(Position position, View exit) {
@@ -136,6 +178,12 @@ public class GoldMineExplorer {
     public Position left() {
         goldMine.moveLeft();
         return goldMine.currentPosition();
+    }
+
+    public void look() {
+        Position position = goldMine.currentPosition();
+        View view = goldMine.look();
+        updateMap(position, view);
     }
 
     public View lookUp() {

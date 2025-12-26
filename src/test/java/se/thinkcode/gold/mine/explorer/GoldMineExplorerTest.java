@@ -37,6 +37,16 @@ public class GoldMineExplorerTest {
             XXXXXXX
             """);
 
+    private final Level level4 = new Level("""
+            XXXXXXXX
+            X      X
+            X      X
+            X      X
+            X H    X
+            X      E
+            XXXXXXXX
+            """);
+
     @Test
     void should_got_to_exit_level_one() {
         GoldMine goldMine = new GoldMine(level1);
@@ -257,6 +267,20 @@ public class GoldMineExplorerTest {
         GoldMine goldMine = new GoldMine(level3);
         GoldMineExplorer explorer = new GoldMineExplorer(goldMine);
         String expected = level3.level();
+
+
+        explorer.explore();
+        String actual = explorer.getMap();
+
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    void should_explore_level_4() {
+        GoldMine goldMine = new GoldMine(level4);
+        GoldMineExplorer explorer = new GoldMineExplorer(goldMine);
+        String expected = level4.level();
 
 
         explorer.explore();
