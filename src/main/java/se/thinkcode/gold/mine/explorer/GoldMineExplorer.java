@@ -11,6 +11,7 @@ public class GoldMineExplorer {
     private final GoldMine goldMine;
     private Position exit = null;
     private View[][] map = null;
+    private Position maxDimension = new Position(0, 0);
 
     public GoldMineExplorer(GoldMine goldMine) {
         this.goldMine = goldMine;
@@ -19,6 +20,103 @@ public class GoldMineExplorer {
     public Position getExit() {
         return exit;
     }
+
+    public void explore() {
+        View exit = new View("Exit");
+        Position position = goldMine.currentPosition();
+
+        position = exploreUp(position, exit);
+        position = exploreRight(position, exit);
+        position = exploreLeft(position, exit);
+        position = exploreDown(position, exit);
+        position = exploreRight(position, exit);
+        position = exploreUp(position, exit);
+    }
+
+    private Position exploreLeft(Position position, View exit) {
+        Position newPosition;
+        newPosition = left();
+        lookAround();
+        while (!position.equals(newPosition)) {
+            position = newPosition;
+            View left = lookLeft();
+            if (left.equals(exit)) {
+                lookAround();
+            } else {
+                newPosition = left();
+                lookAround();
+            }
+        }
+
+        maxDimension = new Position(Math.max(maxDimension.x(), position.x()),
+                Math.max(maxDimension.y(), position.y()));
+
+        return position;
+    }
+
+    private Position exploreDown(Position position, View exit) {
+        Position newPosition;
+        newPosition = down();
+        lookAround();
+        while (!position.equals(newPosition)) {
+            position = newPosition;
+            View down = lookDown();
+            if (down.equals(exit)) {
+                lookAround();
+            } else {
+                newPosition = down();
+                lookAround();
+            }
+        }
+
+        maxDimension = new Position(Math.max(maxDimension.x(), position.x()),
+                Math.max(maxDimension.y(), position.y()));
+
+        return position;
+    }
+
+    private Position exploreRight(Position position, View exit) {
+        Position newPosition;
+        newPosition = right();
+        lookAround();
+        while (!position.equals(newPosition)) {
+            position = newPosition;
+            View right = lookRight();
+            if (right.equals(exit)) {
+                lookAround();
+            } else {
+                newPosition = right();
+                lookAround();
+            }
+        }
+
+        maxDimension = new Position(Math.max(maxDimension.x(), position.x()),
+                Math.max(maxDimension.y(), position.y()));
+
+        return position;
+    }
+
+    private Position exploreUp(Position position, View exit) {
+        Position newPosition;
+        newPosition = up();
+        lookAround();
+        while (!position.equals(newPosition)) {
+            position = newPosition;
+            View up = lookUp();
+            if (up.equals(exit)) {
+                lookAround();
+            } else {
+                newPosition = up();
+                lookAround();
+            }
+        }
+
+        maxDimension = new Position(Math.max(maxDimension.x(), position.x()),
+                Math.max(maxDimension.y(), position.y()));
+
+        return position;
+    }
+
 
     public Position up() {
         goldMine.moveUp();
@@ -140,6 +238,10 @@ public class GoldMineExplorer {
     }
 
     public String getMap() {
+        if (map == null) {
+            return "";
+        }
+
         View exit = new View("Exit");
         View wall = new View("Wall");
         View home = new View("Home");

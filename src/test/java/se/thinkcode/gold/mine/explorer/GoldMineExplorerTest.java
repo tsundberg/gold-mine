@@ -167,6 +167,16 @@ public class GoldMineExplorerTest {
     }
 
     @Test
+    void an_unused_map_should_be_empty() {
+        GoldMine goldMine = new GoldMine(level1);
+        GoldMineExplorer explorer = new GoldMineExplorer(goldMine);
+
+        String actual = explorer.getMap();
+
+        assertThat(actual).isEmpty();
+    }
+
+    @Test
     void should_render_map() {
         GoldMine goldMine = new GoldMine(level1);
         GoldMineExplorer explorer = new GoldMineExplorer(goldMine);
@@ -189,6 +199,20 @@ public class GoldMineExplorerTest {
         explorer.lookAround();
 
 
+        String actual = explorer.getMap();
+
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    void should_explore_level_1() {
+        GoldMine goldMine = new GoldMine(level1);
+        GoldMineExplorer explorer = new GoldMineExplorer(goldMine);
+        String expected = level1.level();
+
+
+        explorer.explore();
         String actual = explorer.getMap();
 
 
