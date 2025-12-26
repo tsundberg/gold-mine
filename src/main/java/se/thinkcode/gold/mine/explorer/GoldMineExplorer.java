@@ -4,6 +4,9 @@ import se.thinkcode.gold.mine.game.GoldMine;
 import se.thinkcode.gold.mine.model.Position;
 import se.thinkcode.gold.mine.model.View;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GoldMineExplorer {
     private final GoldMine goldMine;
     private Position exit = null;
@@ -99,14 +102,23 @@ public class GoldMineExplorer {
     }
 
     private View[][] growMap(Position position, View[][] map) {
+        int y = 1;
+        int x = 1;
         if (map == null) {
-            map = new View[1][1];
+            map = new View[y][x];
         }
 
-        int y = Math.max(map.length, position.y()) + 1;
-        int x = Math.max(map[0].length, position.x()) + 1;
+        while (y <= position.y()) {
+            y++;
+        }
+        while (x <= position.x()) {
+            x++;
+        }
 
-        if (map.length < y && map[0].length < x) {
+        if (map.length < y || map[0].length < x) {
+            y = Math.max(map.length, y);
+            x = Math.max(map[0].length, x);
+
             View[][] newMap = new View[y][x];
             for (y = 0; y < map.length; y++) {
                 for (x = 0; x < map[0].length; x++) {
@@ -118,6 +130,89 @@ public class GoldMineExplorer {
         }
 
         return map;
+    }
+
+    public void lookAround() {
+        lookUp();
+        lookRight();
+        lookLeft();
+        lookDown();
+    }
+
+    public String getMap() {
+        View exit = new View("Exit");
+        View wall = new View("Wall");
+        View home = new View("Home");
+        View empty = new View("Empty");
+
+        List<String> matrix = new ArrayList<>();
+        for (View[] views : map) {
+            StringBuilder row = new StringBuilder();
+            for (View view : views) {
+                if (view == null) {
+                    row.append("?");
+                    continue;
+                }
+                if (view.equals(exit)) {
+                    row.append("E");
+                    continue;
+                }
+                if (view.equals(wall)) {
+                    row.append("X");
+                    continue;
+                }
+                if (view.equals(home)) {
+                    row.append("H");
+                    continue;
+                }
+                if (view.equals(empty)) {
+                    row.append(" ");
+                }
+            }
+            matrix.add(row.toString());
+        }
+
+        fixFirstRow(matrix);
+        fixLastRow(matrix);
+
+        StringBuilder transformedMap = new StringBuilder();
+        for (String row : matrix) {
+            transformedMap.append(row).append("\n");
+        }
+
+        return transformedMap.toString();
+    }
+
+    private void fixFirstRow(List<String> matrix) {
+        String first = matrix.getFirst();
+        if (first.startsWith("?")) {
+            StringBuilder firstRow = new StringBuilder(first);
+            firstRow.setCharAt(0, 'X');
+            first = firstRow.toString();
+        }
+        if (first.endsWith("?")) {
+            StringBuilder firstRow = new StringBuilder(first);
+            firstRow.setCharAt(firstRow.length() - 1, 'X');
+            first = firstRow.toString();
+        }
+        matrix.removeFirst();
+        matrix.addFirst(first);
+    }
+
+    private void fixLastRow(List<String> matrix) {
+        String last = matrix.getLast();
+        if (last.startsWith("?")) {
+            StringBuilder lastRow = new StringBuilder(last);
+            lastRow.setCharAt(0, 'X');
+            last = lastRow.toString();
+        }
+        if (last.endsWith("?")) {
+            StringBuilder lastRow = new StringBuilder(last);
+            lastRow.setCharAt(lastRow.length() - 1, 'X');
+            last = lastRow.toString();
+        }
+        matrix.removeLast();
+        matrix.addLast(last);
     }
 
     static String clearScreen() {

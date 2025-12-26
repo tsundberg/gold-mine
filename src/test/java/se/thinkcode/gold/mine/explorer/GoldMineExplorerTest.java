@@ -167,6 +167,35 @@ public class GoldMineExplorerTest {
     }
 
     @Test
+    void should_render_map() {
+        GoldMine goldMine = new GoldMine(level1);
+        GoldMineExplorer explorer = new GoldMineExplorer(goldMine);
+        String expected = level1.level();
+        explorer.up();
+        explorer.lookAround();
+        explorer.left();
+        explorer.lookAround();
+        explorer.down();
+        explorer.lookAround();
+        explorer.down();
+        explorer.lookAround();
+        explorer.right();
+        explorer.lookAround();
+        explorer.right();
+        explorer.lookAround();
+        explorer.up();
+        explorer.lookAround();
+        explorer.up();
+        explorer.lookAround();
+
+
+        String actual = explorer.getMap();
+
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
     void should_clear_screen_on_a_vt_100_terminal() {
         GoldMine goldMine = new GoldMine(level1);
 
