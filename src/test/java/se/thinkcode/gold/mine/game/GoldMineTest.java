@@ -160,6 +160,54 @@ public class GoldMineTest {
     }
 
     @Test
+    void should_not_go_through_walls_to_the_left() {
+        GoldMine goldMine = new GoldMine(level1);
+        for (int steps = 0; steps < 5; steps++) {
+            goldMine.moveLeft();
+        }
+
+        Position actual = goldMine.currentPosition();
+
+        assertThat(actual).isEqualTo(new Position(1, 2));
+    }
+
+    @Test
+    void should_not_go_through_walls_to_the_right() {
+        GoldMine goldMine = new GoldMine(level1);
+        for (int steps = 0; steps < 5; steps++) {
+            goldMine.moveRight();
+        }
+
+        Position actual = goldMine.currentPosition();
+
+        assertThat(actual).isEqualTo(new Position(3, 2));
+    }
+
+    @Test
+    void should_not_go_through_walls_up() {
+        GoldMine goldMine = new GoldMine(level1);
+        for (int steps = 0; steps < 5; steps++) {
+            goldMine.moveUp();
+        }
+
+        Position actual = goldMine.currentPosition();
+
+        assertThat(actual).isEqualTo(new Position(2, 1));
+    }
+
+    @Test
+    void should_not_go_through_walls_down() {
+        GoldMine goldMine = new GoldMine(level1);
+        for (int steps = 0; steps < 5; steps++) {
+            goldMine.moveDown();
+        }
+
+        Position actual = goldMine.currentPosition();
+
+        assertThat(actual).isEqualTo(new Position(2, 3));
+    }
+
+    @Test
     void should_find_exit() {
         GoldMine goldMine = new GoldMine(level2);
 

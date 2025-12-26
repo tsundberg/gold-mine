@@ -45,29 +45,47 @@ public class GoldMine {
     public void moveLeft() {
         int x = position.x() - 1;
         int y = position.y();
+        Position nextPos = new Position(x, y);
 
-        position = new Position(x, y);
+        if (isNotWall(nextPos)) {
+            position = nextPos;
+        }
     }
 
     public void moveRight() {
         int x = position.x() + 1;
         int y = position.y();
+        Position nextPos = new Position(x, y);
 
-        position = new Position(x, y);
+        if (isNotWall(nextPos)) {
+            position = nextPos;
+        }
     }
 
     public void moveUp() {
         int x = position.x();
         int y = position.y() - 1;
+        Position nextPos = new Position(x, y);
 
-        position = new Position(x, y);
+        if (isNotWall(nextPos)) {
+            position = nextPos;
+        }
     }
 
     public void moveDown() {
         int x = position.x();
         int y = position.y() + 1;
+        Position nextPos = new Position(x, y);
 
-        position = new Position(x, y);
+        if (isNotWall(nextPos)) {
+            position = nextPos;
+        }
+    }
+
+    private boolean isNotWall(Position nexPos) {
+        char candidate = map[nexPos.y()][nexPos.x()];
+
+        return candidate != 'X';
     }
 
     public View lookLeft() {
