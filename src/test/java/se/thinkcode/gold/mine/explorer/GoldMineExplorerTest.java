@@ -58,13 +58,16 @@ public class GoldMineExplorerTest {
             """);
 
     private final Level level6 = new Level("""
-            XXXXXXXXXXX
-            X         X
-            X    H    X
-            X         X
-            X         X
-            X         X
-            XXXXXXXEXXX
+            XXXXXXXXXXXXXX
+            X            X
+            X       H    X
+            X            X
+            X            X
+            X            X
+            X            X
+            X            X
+            X            X
+            XXXXXXXEXXXXXX
             """);
 
     @Test
