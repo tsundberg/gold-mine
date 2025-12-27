@@ -23,7 +23,7 @@ public class NaiveExplorer implements Explorer {
         position = exploreDown(position, exit);
         position = exploreRight(position, exit);
         position = exploreUp(position, exit);
-        position = exploreLeft(position, exit);
+        exploreLeft(position, exit);
 
         Position unknownPosition = unknown();
         while (unknownPosition != null) {
