@@ -82,12 +82,11 @@ public class GoldMineExplorer {
         while (!position.equals(newPosition)) {
             position = newPosition;
             View left = lookLeft();
-            if (left.equals(exit)) {
-                lookAround();
-            } else {
+            if (!left.equals(exit)) {
                 newPosition = left();
-                lookAround();
             }
+
+            lookAround();
         }
 
         maxDimension = new Position(Math.max(maxDimension.x(), position.x()),
@@ -103,12 +102,11 @@ public class GoldMineExplorer {
         while (!position.equals(newPosition)) {
             position = newPosition;
             View down = lookDown();
-            if (down.equals(exit)) {
-                lookAround();
-            } else {
+            if (!down.equals(exit)) {
                 newPosition = down();
-                lookAround();
             }
+
+            lookAround();
         }
 
         maxDimension = new Position(Math.max(maxDimension.x(), position.x()),
@@ -124,12 +122,11 @@ public class GoldMineExplorer {
         while (!position.equals(newPosition)) {
             position = newPosition;
             View right = lookRight();
-            if (right.equals(exit)) {
-                lookAround();
-            } else {
+            if (!right.equals(exit)) {
                 newPosition = right();
-                lookAround();
             }
+
+            lookAround();
         }
 
         maxDimension = new Position(Math.max(maxDimension.x(), position.x()),
@@ -145,12 +142,10 @@ public class GoldMineExplorer {
         while (!position.equals(newPosition)) {
             position = newPosition;
             View up = lookUp();
-            if (up.equals(exit)) {
-                lookAround();
-            } else {
+            if (!up.equals(exit)) {
                 newPosition = up();
-                lookAround();
             }
+            lookAround();
         }
 
         maxDimension = new Position(Math.max(maxDimension.x(), position.x()),
