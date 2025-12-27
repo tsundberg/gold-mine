@@ -2,25 +2,21 @@ package se.thinkcode.gold.mine.explorer.naive;
 
 import se.thinkcode.gold.mine.explorer.Explorer;
 import se.thinkcode.gold.mine.explorer.GoldMineExplorer;
-import se.thinkcode.gold.mine.game.GoldMine;
 import se.thinkcode.gold.mine.model.Position;
 import se.thinkcode.gold.mine.model.View;
 
 public class NaiveExplorer implements Explorer {
-    private final GoldMine goldMine;
     private final GoldMineExplorer goldMineExplorer;
     private Position maxDimension = new Position(0, 0);
 
-    public NaiveExplorer(GoldMine goldMine,
-                         GoldMineExplorer goldMineExplorer) {
-        this.goldMine = goldMine;
+    public NaiveExplorer(GoldMineExplorer goldMineExplorer) {
         this.goldMineExplorer = goldMineExplorer;
     }
 
     @Override
     public void explore() {
         View exit = new View("Exit");
-        Position position = goldMine.currentPosition();
+        Position position = goldMineExplorer.currentPosition();
 
         position = exploreUp(position, exit);
         position = exploreLeft(position, exit);
@@ -38,7 +34,7 @@ public class NaiveExplorer implements Explorer {
     }
 
     private void visit(Position position) {
-        Position currentPosition = goldMine.currentPosition();
+        Position currentPosition = goldMineExplorer.currentPosition();
 
         while (!position.equals(currentPosition)) {
             if (currentPosition.y() - position.y() > 0) {
@@ -55,7 +51,7 @@ public class NaiveExplorer implements Explorer {
                 goldMineExplorer.right();
             }
 
-            currentPosition = goldMine.currentPosition();
+            currentPosition = goldMineExplorer.currentPosition();
         }
     }
 

@@ -246,6 +246,10 @@ public class GoldMineExplorer {
         return map[y][x];
     }
 
+    public Position currentPosition() {
+        return goldMine.currentPosition();
+    }
+
     static String clearScreen() {
         // https://espterm.github.io/docs/VT100%20escape%20codes.html
         // https://stackoverflow.com/questions/48773272/write-print-to-the-bottom-of-terminal

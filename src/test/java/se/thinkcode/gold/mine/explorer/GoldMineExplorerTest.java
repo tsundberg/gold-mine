@@ -1,8 +1,10 @@
 package se.thinkcode.gold.mine.explorer;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import se.thinkcode.gold.mine.explorer.a.star.AStarExplorer;
 import se.thinkcode.gold.mine.explorer.naive.NaiveExplorer;
 import se.thinkcode.gold.mine.game.GoldMine;
 import se.thinkcode.gold.mine.game.Level;
@@ -281,7 +283,7 @@ public class GoldMineExplorerTest {
         GoldMine goldMine = new GoldMine(level);
         GoldMineExplorer goldMineExplorer = new GoldMineExplorer(goldMine);
         String expected = level.level();
-        Explorer naiveExplorer = new NaiveExplorer(goldMine, goldMineExplorer);
+        Explorer naiveExplorer = new NaiveExplorer(goldMineExplorer);
 
 
         goldMineExplorer.explore(naiveExplorer);
@@ -291,6 +293,22 @@ public class GoldMineExplorerTest {
         assertThat(actual).isEqualTo(expected);
     }
 
+    @ParameterizedTest
+    @MethodSource("levels")
+    @Disabled
+    void should_explore_all_levels_with_a_star_explorer(Level level) {
+        GoldMine goldMine = new GoldMine(level);
+        GoldMineExplorer goldMineExplorer = new GoldMineExplorer(goldMine);
+        String expected = level.level();
+        Explorer naiveExplorer = new AStarExplorer(goldMineExplorer);
+
+
+        goldMineExplorer.explore(naiveExplorer);
+        String actual = goldMineExplorer.getMap();
+
+
+        assertThat(actual).isEqualTo(expected);
+    }
 
     static List<Level> levels() {
         return List.of(
