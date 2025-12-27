@@ -26,11 +26,11 @@ public class GoldMineExplorer {
         Position position = goldMine.currentPosition();
 
         position = exploreUp(position, exit);
-        position = exploreRight(position, exit);
         position = exploreLeft(position, exit);
         position = exploreDown(position, exit);
         position = exploreRight(position, exit);
         position = exploreUp(position, exit);
+        position = exploreLeft(position, exit);
 
         Position unknownPosition = unknown();
         while (unknownPosition != null) {

@@ -1,16 +1,20 @@
 package se.thinkcode.gold.mine.explorer;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import se.thinkcode.gold.mine.game.GoldMine;
 import se.thinkcode.gold.mine.game.Level;
 import se.thinkcode.gold.mine.model.Position;
 import se.thinkcode.gold.mine.model.View;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class GoldMineExplorerTest {
 
-    private final Level level1 = new Level("""
+    private final static Level level1 = new Level("""
             XXXXX
             X   X
             X H X
@@ -18,7 +22,7 @@ public class GoldMineExplorerTest {
             XXXXX
             """);
 
-    private final Level level2 = new Level("""
+    private final static Level level2 = new Level("""
             XXXXXX
             X    X
             X    X
@@ -27,7 +31,7 @@ public class GoldMineExplorerTest {
             XXXXXX
             """);
 
-    private final Level level3 = new Level("""
+    private final static Level level3 = new Level("""
             XXXXXXX
             X     X
             X     X
@@ -37,7 +41,7 @@ public class GoldMineExplorerTest {
             XXXXXXX
             """);
 
-    private final Level level4 = new Level("""
+    private final static Level level4 = new Level("""
             XXXXXXXX
             X      X
             X      X
@@ -47,7 +51,7 @@ public class GoldMineExplorerTest {
             XXXXXXXX
             """);
 
-    private final Level level5 = new Level("""
+    private final static Level level5 = new Level("""
             XXXXXXXXX
             X       X
             X   H   X
@@ -57,10 +61,23 @@ public class GoldMineExplorerTest {
             XXXXXEXXX
             """);
 
-    private final Level level6 = new Level("""
+    private final static Level level6 = new Level("""
             XXXXXXXXXXXXXX
             X            X
             X       H    X
+            X            X
+            X            X
+            X            X
+            X            X
+            X            X
+            X            X
+            XXXXXXXEXXXXXX
+            """);
+
+    private final static Level level7 = new Level("""
+            XXXXHXXXXXXXXX
+            X            X
+            X            X
             X            X
             X            X
             X            X
@@ -257,11 +274,12 @@ public class GoldMineExplorerTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    @Test
-    void should_explore_level_1() {
-        GoldMine goldMine = new GoldMine(level1);
+    @ParameterizedTest
+    @MethodSource("levels")
+    void should_explore_all_levels(Level level) {
+        GoldMine goldMine = new GoldMine(level);
         GoldMineExplorer explorer = new GoldMineExplorer(goldMine);
-        String expected = level1.level();
+        String expected = level.level();
 
 
         explorer.explore();
@@ -271,74 +289,16 @@ public class GoldMineExplorerTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    @Test
-    void should_explore_level_2() {
-        GoldMine goldMine = new GoldMine(level2);
-        GoldMineExplorer explorer = new GoldMineExplorer(goldMine);
-        String expected = level2.level();
 
-
-        explorer.explore();
-        String actual = explorer.getMap();
-
-
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @Test
-    void should_explore_level_3() {
-        GoldMine goldMine = new GoldMine(level3);
-        GoldMineExplorer explorer = new GoldMineExplorer(goldMine);
-        String expected = level3.level();
-
-
-        explorer.explore();
-        String actual = explorer.getMap();
-
-
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @Test
-    void should_explore_level_4() {
-        GoldMine goldMine = new GoldMine(level4);
-        GoldMineExplorer explorer = new GoldMineExplorer(goldMine);
-        String expected = level4.level();
-
-
-        explorer.explore();
-        String actual = explorer.getMap();
-
-
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @Test
-    void should_explore_level_5() {
-        GoldMine goldMine = new GoldMine(level5);
-        GoldMineExplorer explorer = new GoldMineExplorer(goldMine);
-        String expected = level5.level();
-
-
-        explorer.explore();
-        String actual = explorer.getMap();
-
-
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @Test
-    void should_explore_level_6() {
-        GoldMine goldMine = new GoldMine(level6);
-        GoldMineExplorer explorer = new GoldMineExplorer(goldMine);
-        String expected = level6.level();
-
-
-        explorer.explore();
-        String actual = explorer.getMap();
-
-
-        assertThat(actual).isEqualTo(expected);
+    static List<Level> levels() {
+        return List.of(
+                level1,
+                level2,
+                level3,
+                level4,
+                level5,
+                level6
+        );
     }
 
     @Test
