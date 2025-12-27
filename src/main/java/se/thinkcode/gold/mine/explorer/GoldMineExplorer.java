@@ -35,7 +35,7 @@ public class GoldMineExplorer {
         Position unknownPosition = unknown();
         while (unknownPosition != null) {
             visit(unknownPosition);
-            look();
+            lookAround();
             unknownPosition = unknown();
         }
     }
@@ -63,8 +63,8 @@ public class GoldMineExplorer {
     }
 
     private Position unknown() {
-        for (int y = 1; y < maxDimension.y() - 1; y++) {
-            for (int x = 1; x < maxDimension.x() - 1; x++) {
+        for (int y = 0; y < maxDimension.y() - 1; y++) {
+            for (int x = 0; x < maxDimension.x() - 1; x++) {
                 View view = map[y][x];
                 if (view == null) {
                     return new Position(x, y);
@@ -248,19 +248,17 @@ public class GoldMineExplorer {
     }
 
     private View[][] growMap(Position position, View[][] map) {
-        int y = 1;
-        int x = 1;
+        int y = position.y() + 1;
+        int x = position.x() + 1;
         if (map == null) {
             map = new View[y][x];
         }
 
-        while (y <= position.y()) {
-            y++;
-        }
-        while (x <= position.x()) {
-            x++;
-        }
+        map = growAsNeeded(map, y, x);
+        return fixCorners(map);
+    }
 
+    private View[][] growAsNeeded(View[][] map, int y, int x) {
         if (map.length < y || map[0].length < x) {
             y = Math.max(map.length, y);
             x = Math.max(map[0].length, x);
@@ -278,7 +276,54 @@ public class GoldMineExplorer {
         return map;
     }
 
+    private View[][] fixCorners(View[][] map) {
+        View wall = new View("Wall");
+
+        // Upper, left corner
+        int depth = 0;
+        int right = 0;
+        if (map[depth][right] == null &&
+                map[depth][right + 1] != null &&
+                map[depth][right + 1].equals(wall) &&
+                map[depth + 1][right] != null) {
+            map[depth][right] = wall;
+        }
+
+        // Upper, right corner
+        depth = 0;
+        right = map[0].length - 1;
+        if (map[0][right] == null &&
+                map[depth][right - 1] != null &&
+                map[depth][right - 1].equals(wall) &&
+                map[depth + 1][right] != null) {
+            map[depth][right] = wall;
+        }
+
+        // Lower, left corner
+        depth = map.length - 1;
+        right = 0;
+        if (map[depth][0] == null &&
+                map[depth][right + 1] != null &&
+                map[depth][right + 1].equals(wall) &&
+                map[depth - 1][right] != null) {
+            map[depth][right] = wall;
+        }
+
+        // Lower, right corner
+        depth = map.length - 1;
+        right = map[depth].length - 1;
+        if (map[depth][right] == null &&
+                map[depth][right - 1] != null &&
+                map[depth][right - 1].equals(wall) &&
+                map[depth - 1][right] != null) {
+            map[depth][right] = wall;
+        }
+
+        return map;
+    }
+
     public void lookAround() {
+        look();
         lookUp();
         lookRight();
         lookLeft();
@@ -322,47 +367,12 @@ public class GoldMineExplorer {
             matrix.add(row.toString());
         }
 
-        fixFirstRow(matrix);
-        fixLastRow(matrix);
-
         StringBuilder transformedMap = new StringBuilder();
         for (String row : matrix) {
             transformedMap.append(row).append("\n");
         }
 
         return transformedMap.toString();
-    }
-
-    private void fixFirstRow(List<String> matrix) {
-        String first = matrix.getFirst();
-        if (first.startsWith("?")) {
-            StringBuilder firstRow = new StringBuilder(first);
-            firstRow.setCharAt(0, 'X');
-            first = firstRow.toString();
-        }
-        if (first.endsWith("?")) {
-            StringBuilder firstRow = new StringBuilder(first);
-            firstRow.setCharAt(firstRow.length() - 1, 'X');
-            first = firstRow.toString();
-        }
-        matrix.removeFirst();
-        matrix.addFirst(first);
-    }
-
-    private void fixLastRow(List<String> matrix) {
-        String last = matrix.getLast();
-        if (last.startsWith("?")) {
-            StringBuilder lastRow = new StringBuilder(last);
-            lastRow.setCharAt(0, 'X');
-            last = lastRow.toString();
-        }
-        if (last.endsWith("?")) {
-            StringBuilder lastRow = new StringBuilder(last);
-            lastRow.setCharAt(lastRow.length() - 1, 'X');
-            last = lastRow.toString();
-        }
-        matrix.removeLast();
-        matrix.addLast(last);
     }
 
     static String clearScreen() {
