@@ -3,6 +3,7 @@ package se.thinkcode.gold.mine.explorer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import se.thinkcode.gold.mine.explorer.naive.NaiveExplorer;
 import se.thinkcode.gold.mine.game.GoldMine;
 import se.thinkcode.gold.mine.game.Level;
 import se.thinkcode.gold.mine.model.Position;
@@ -276,14 +277,15 @@ public class GoldMineExplorerTest {
 
     @ParameterizedTest
     @MethodSource("levels")
-    void should_explore_all_levels(Level level) {
+    void should_explore_all_levels_with_naive_explorer(Level level) {
         GoldMine goldMine = new GoldMine(level);
-        GoldMineExplorer explorer = new GoldMineExplorer(goldMine);
+        GoldMineExplorer goldMineExplorer = new GoldMineExplorer(goldMine);
         String expected = level.level();
+        Explorer naiveExplorer = new NaiveExplorer(goldMine, goldMineExplorer);
 
 
-        explorer.explore();
-        String actual = explorer.getMap();
+        goldMineExplorer.explore(naiveExplorer);
+        String actual = goldMineExplorer.getMap();
 
 
         assertThat(actual).isEqualTo(expected);
