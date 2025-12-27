@@ -4,14 +4,17 @@ import se.thinkcode.gold.mine.explorer.Explorer;
 import se.thinkcode.gold.mine.explorer.GoldMineExplorer;
 
 public class AStarExplorer implements Explorer {
+    private final GoldMineExplorer goldMineExplorer;
+
     public AStarExplorer(GoldMineExplorer goldMineExplorer) {
-        // todo implement me
-        throw new RuntimeException("Not yet implemented");
+        this.goldMineExplorer = goldMineExplorer;
     }
 
     @Override
     public void explore() {
-        // todo implement me
-        throw new RuntimeException("Not yet implemented");
+        goldMineExplorer.look();
+
+
+        System.out.println();
     }
 }

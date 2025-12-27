@@ -306,8 +306,21 @@ public class GoldMineExplorerTest {
         assertThat(actual).isEqualTo(expected);
     }
 
+    static List<Level> levels() {
+        return List.of(
+                level1,
+                level2,
+                level3,
+                level4,
+                level5,
+                level6,
+                level7,
+                level8
+        );
+    }
+
     @ParameterizedTest
-    @MethodSource("levels")
+    @MethodSource("levels_a_star")
     @Disabled
     void should_explore_all_levels_with_a_star_explorer(Level level) {
         GoldMine goldMine = new GoldMine(level);
@@ -323,9 +336,10 @@ public class GoldMineExplorerTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    static List<Level> levels() {
+    static List<Level> levels_a_star() {
         return List.of(
-                level1,
+                level1
+                /*,
                 level2,
                 level3,
                 level4,
@@ -333,6 +347,7 @@ public class GoldMineExplorerTest {
                 level6,
                 level7,
                 level8
+                 */
         );
     }
 
