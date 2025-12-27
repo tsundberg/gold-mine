@@ -70,8 +70,7 @@ public class NaiveExplorer implements Explorer {
     }
 
     private Position exploreLeft(Position position, View exit) {
-        Position newPosition;
-        newPosition = goldMineExplorer.left();
+        Position newPosition = goldMineExplorer.left();
         goldMineExplorer.lookAround();
         while (!position.equals(newPosition)) {
             position = newPosition;
@@ -90,8 +89,7 @@ public class NaiveExplorer implements Explorer {
     }
 
     private Position exploreDown(Position position, View exit) {
-        Position newPosition;
-        newPosition = goldMineExplorer.down();
+        Position newPosition = goldMineExplorer.down();
         goldMineExplorer.lookAround();
         while (!position.equals(newPosition)) {
             position = newPosition;
@@ -110,8 +108,7 @@ public class NaiveExplorer implements Explorer {
     }
 
     private Position exploreRight(Position position, View exit) {
-        Position newPosition;
-        newPosition = goldMineExplorer.right();
+        Position newPosition = goldMineExplorer.right();
         goldMineExplorer.lookAround();
         while (!position.equals(newPosition)) {
             position = newPosition;
@@ -130,8 +127,7 @@ public class NaiveExplorer implements Explorer {
     }
 
     private Position exploreUp(Position position, View exit) {
-        Position newPosition;
-        newPosition = goldMineExplorer.up();
+        Position newPosition = goldMineExplorer.up();
         goldMineExplorer.lookAround();
         while (!position.equals(newPosition)) {
             position = newPosition;
