@@ -90,6 +90,19 @@ public class GoldMineExplorerTest {
             XXXXXXXEXXXXXX
             """);
 
+    private final static Level level8 = new Level("""
+            XXXXXXXXXXXXXX
+            X            X
+            X            X
+            H            X
+            X            X
+            X            X
+            X            X
+            X            X
+            X            X
+            XXXXXXXEXXXXXX
+            """);
+
     @Test
     void should_got_to_exit_level_one() {
         GoldMine goldMine = new GoldMine(level1);
@@ -317,7 +330,9 @@ public class GoldMineExplorerTest {
                 level3,
                 level4,
                 level5,
-                level6
+                level6,
+                level7,
+                level8
         );
     }
 

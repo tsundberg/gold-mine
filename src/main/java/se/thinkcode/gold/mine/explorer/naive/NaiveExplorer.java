@@ -18,12 +18,30 @@ public class NaiveExplorer implements Explorer {
         View exit = new View("Exit");
         Position position = goldMineExplorer.currentPosition();
 
-        position = exploreUp(position, exit);
-        position = exploreLeft(position, exit);
-        position = exploreDown(position, exit);
-        position = exploreRight(position, exit);
-        position = exploreUp(position, exit);
-        exploreLeft(position, exit);
+        if (position.y() == 0) {
+            position = exploreDown(position, exit);
+            position = exploreLeft(position, exit);
+            position = exploreUp(position, exit);
+            position = exploreRight(position, exit);
+            position = exploreDown(position, exit);
+            exploreLeft(position, exit);
+        }
+        if (position.x() == 0) {
+            position = exploreRight(position, exit);
+            position = exploreDown(position, exit);
+            position = exploreLeft(position, exit);
+            position = exploreUp(position, exit);
+            position = exploreRight(position, exit);
+            position = exploreDown(position, exit);
+            exploreLeft(position, exit);
+        } else {
+            position = exploreUp(position, exit);
+            position = exploreLeft(position, exit);
+            position = exploreDown(position, exit);
+            position = exploreRight(position, exit);
+            position = exploreUp(position, exit);
+            exploreLeft(position, exit);
+        }
 
         Position unknownPosition = unknown();
         while (unknownPosition != null) {
