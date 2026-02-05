@@ -6,7 +6,7 @@ import se.thinkcode.gold.mine.model.View;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class GoldMineTest {
+public class GoldMineGameTest {
 
     private final Level level0 = new Level("""
             XXX
@@ -33,7 +33,7 @@ public class GoldMineTest {
     @Test
     void should_see_wall_to_the_left_level_0() {
         View expected = new View("Wall");
-        GoldMine goldMine = new GoldMine(level0);
+        GoldMineGame goldMine = new GoldMineGame(level0);
 
         View actual = goldMine.lookLeft();
 
@@ -43,7 +43,7 @@ public class GoldMineTest {
     @Test
     void should_see_wall_to_the_right_level_0() {
         View expected = new View("Wall");
-        GoldMine goldMine = new GoldMine(level0);
+        GoldMineGame goldMine = new GoldMineGame(level0);
 
         View actual = goldMine.lookRight();
 
@@ -53,7 +53,7 @@ public class GoldMineTest {
     @Test
     void should_see_wall_up_level_0() {
         View expected = new View("Wall");
-        GoldMine goldMine = new GoldMine(level0);
+        GoldMineGame goldMine = new GoldMineGame(level0);
 
         View actual = goldMine.lookUp();
 
@@ -63,7 +63,7 @@ public class GoldMineTest {
     @Test
     void should_see_wall_down_level_0() {
         View expected = new View("Wall");
-        GoldMine goldMine = new GoldMine(level0);
+        GoldMineGame goldMine = new GoldMineGame(level0);
 
         View actual = goldMine.lookDown();
 
@@ -73,7 +73,7 @@ public class GoldMineTest {
     @Test
     void should_not_see_wall_to_the_left_level_1() {
         View expected = new View("Empty");
-        GoldMine goldMine = new GoldMine(level1);
+        GoldMineGame goldMine = new GoldMineGame(level1);
 
         View actual = goldMine.lookLeft();
 
@@ -83,7 +83,7 @@ public class GoldMineTest {
     @Test
     void should_not_see_wall_to_the_right_level_1() {
         View expected = new View("Empty");
-        GoldMine goldMine = new GoldMine(level1);
+        GoldMineGame goldMine = new GoldMineGame(level1);
 
         View actual = goldMine.lookRight();
 
@@ -93,7 +93,7 @@ public class GoldMineTest {
     @Test
     void should_not_see_wall_up_level_1() {
         View expected = new View("Empty");
-        GoldMine goldMine = new GoldMine(level1);
+        GoldMineGame goldMine = new GoldMineGame(level1);
 
         View actual = goldMine.lookUp();
 
@@ -103,7 +103,7 @@ public class GoldMineTest {
     @Test
     void should_not_see_wall_down_level_1() {
         View expected = new View("Empty");
-        GoldMine goldMine = new GoldMine(level1);
+        GoldMineGame goldMine = new GoldMineGame(level1);
 
         View actual = goldMine.lookDown();
 
@@ -112,7 +112,7 @@ public class GoldMineTest {
 
     @Test
     void should_get_current_position() {
-        GoldMine goldMine = new GoldMine(level0);
+        GoldMineGame goldMine = new GoldMineGame(level0);
 
         Position actual = goldMine.currentPosition();
 
@@ -121,7 +121,7 @@ public class GoldMineTest {
 
     @Test
     void should_move_to_the_left() {
-        GoldMine goldMine = new GoldMine(level1);
+        GoldMineGame goldMine = new GoldMineGame(level1);
 
         goldMine.moveLeft();
         Position actual = goldMine.currentPosition();
@@ -131,7 +131,7 @@ public class GoldMineTest {
 
     @Test
     void should_move_to_the_right() {
-        GoldMine goldMine = new GoldMine(level1);
+        GoldMineGame goldMine = new GoldMineGame(level1);
 
         goldMine.moveRight();
         Position actual = goldMine.currentPosition();
@@ -141,7 +141,7 @@ public class GoldMineTest {
 
     @Test
     void should_move_up() {
-        GoldMine goldMine = new GoldMine(level1);
+        GoldMineGame goldMine = new GoldMineGame(level1);
 
         goldMine.moveUp();
         Position actual = goldMine.currentPosition();
@@ -151,7 +151,7 @@ public class GoldMineTest {
 
     @Test
     void should_move_down() {
-        GoldMine goldMine = new GoldMine(level1);
+        GoldMineGame goldMine = new GoldMineGame(level1);
 
         goldMine.moveDown();
         Position actual = goldMine.currentPosition();
@@ -161,7 +161,7 @@ public class GoldMineTest {
 
     @Test
     void should_not_go_through_walls_to_the_left() {
-        GoldMine goldMine = new GoldMine(level1);
+        GoldMineGame goldMine = new GoldMineGame(level1);
         for (int steps = 0; steps < 5; steps++) {
             goldMine.moveLeft();
         }
@@ -173,7 +173,7 @@ public class GoldMineTest {
 
     @Test
     void should_not_go_through_walls_to_the_right() {
-        GoldMine goldMine = new GoldMine(level1);
+        GoldMineGame goldMine = new GoldMineGame(level1);
         for (int steps = 0; steps < 5; steps++) {
             goldMine.moveRight();
         }
@@ -185,7 +185,7 @@ public class GoldMineTest {
 
     @Test
     void should_not_go_through_walls_up() {
-        GoldMine goldMine = new GoldMine(level1);
+        GoldMineGame goldMine = new GoldMineGame(level1);
         for (int steps = 0; steps < 5; steps++) {
             goldMine.moveUp();
         }
@@ -197,7 +197,7 @@ public class GoldMineTest {
 
     @Test
     void should_not_go_through_walls_down() {
-        GoldMine goldMine = new GoldMine(level1);
+        GoldMineGame goldMine = new GoldMineGame(level1);
         for (int steps = 0; steps < 5; steps++) {
             goldMine.moveDown();
         }
@@ -209,7 +209,7 @@ public class GoldMineTest {
 
     @Test
     void should_find_exit() {
-        GoldMine goldMine = new GoldMine(level2);
+        GoldMineGame goldMine = new GoldMineGame(level2);
 
         View actual = goldMine.getView(3, 4);
 

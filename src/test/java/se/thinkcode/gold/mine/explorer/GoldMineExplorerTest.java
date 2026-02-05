@@ -6,6 +6,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 import se.thinkcode.gold.mine.explorer.a.star.AStarExplorer;
 import se.thinkcode.gold.mine.explorer.naive.NaiveExplorer;
 import se.thinkcode.gold.mine.game.GoldMine;
+import se.thinkcode.gold.mine.game.GoldMineGame;
+import se.thinkcode.gold.mine.game.InMemoryGoldMine;
 import se.thinkcode.gold.mine.game.Level;
 import se.thinkcode.gold.mine.model.Position;
 import se.thinkcode.gold.mine.model.View;
@@ -104,7 +106,8 @@ public class GoldMineExplorerTest {
 
     @Test
     void should_got_to_exit_level_one() {
-        GoldMine goldMine = new GoldMine(level1);
+        GoldMineGame game = new GoldMineGame(level1);
+        GoldMine goldMine = new InMemoryGoldMine(game);
 
         GoldMineExplorer explorer = new GoldMineExplorer(goldMine);
 
@@ -119,7 +122,8 @@ public class GoldMineExplorerTest {
 
     @Test
     void should_got_to_exit_level_the_a_long_way() {
-        GoldMine goldMine = new GoldMine(level1);
+        GoldMineGame game = new GoldMineGame(level1);
+        GoldMine goldMine = new InMemoryGoldMine(game);
 
         GoldMineExplorer explorer = new GoldMineExplorer(goldMine);
 
@@ -252,7 +256,8 @@ public class GoldMineExplorerTest {
 
     @Test
     void an_unused_map_should_be_empty() {
-        GoldMine goldMine = new GoldMine(level1);
+        GoldMineGame game = new GoldMineGame(level1);
+        GoldMine goldMine = new InMemoryGoldMine(game);
         GoldMineExplorer explorer = new GoldMineExplorer(goldMine);
 
         String actual = explorer.getMap();
@@ -262,7 +267,8 @@ public class GoldMineExplorerTest {
 
     @Test
     void should_render_map() {
-        GoldMine goldMine = new GoldMine(level1);
+        GoldMineGame game = new GoldMineGame(level1);
+        GoldMine goldMine = new InMemoryGoldMine(game);
         GoldMineExplorer explorer = new GoldMineExplorer(goldMine);
         String expected = level1.level();
         explorer.up();
@@ -292,7 +298,8 @@ public class GoldMineExplorerTest {
     @ParameterizedTest
     @MethodSource("levels")
     void should_explore_all_levels_with_naive_explorer(Level level) {
-        GoldMine goldMine = new GoldMine(level);
+        GoldMineGame game = new GoldMineGame(level);
+        GoldMine goldMine = new InMemoryGoldMine(game);
         GoldMineExplorer goldMineExplorer = new GoldMineExplorer(goldMine);
         String expected = level.level();
         Explorer naiveExplorer = new NaiveExplorer(goldMineExplorer);
@@ -321,7 +328,8 @@ public class GoldMineExplorerTest {
     @ParameterizedTest
     @MethodSource("levels_a_star")
     void should_explore_all_levels_with_a_star_explorer(Level level) {
-        GoldMine goldMine = new GoldMine(level);
+        GoldMineGame game = new GoldMineGame(level);
+        GoldMine goldMine = new InMemoryGoldMine(game);
         GoldMineExplorer goldMineExplorer = new GoldMineExplorer(goldMine);
         String expected = level.level();
         Explorer naiveExplorer = new AStarExplorer(goldMineExplorer);
@@ -349,7 +357,8 @@ public class GoldMineExplorerTest {
 
     @Test
     void should_clear_screen_on_a_vt_100_terminal() {
-        GoldMine goldMine = new GoldMine(level1);
+        GoldMineGame game = new GoldMineGame(level1);
+        GoldMine goldMine = new InMemoryGoldMine(game);
 
         String actual = GoldMineExplorer.clearScreen();
 
@@ -358,7 +367,8 @@ public class GoldMineExplorerTest {
 
     @Test
     void should_send_cursor_to_home_on_a_vt_100_terminal() {
-        GoldMine goldMine = new GoldMine(level1);
+        GoldMineGame game = new GoldMineGame(level1);
+        GoldMine goldMine = new InMemoryGoldMine(game);
 
         String actual = GoldMineExplorer.cursorHome();
 
@@ -367,7 +377,8 @@ public class GoldMineExplorerTest {
 
     @Test
     void should_send_cursor_to_x_and_y_coordinates_on_a_vt_100_terminal() {
-        GoldMine goldMine = new GoldMine(level1);
+        GoldMineGame game = new GoldMineGame(level1);
+        GoldMine goldMine = new InMemoryGoldMine(game);
 
         String actual = GoldMineExplorer.cursorTo(1, 2);
 
