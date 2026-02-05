@@ -26,26 +26,26 @@ public class AStarExplorer implements Explorer {
 
             if (target.equals(current)) {
                 safeLookAround();
-                target = findExplorationTarget();
-                continue;
-            }
-
-            View[][] map = goldMineExplorer.getViewMap();
-            List<String> path = findPath(map, current, target);
-
-            if (path.isEmpty()) {
-                // Can't reach this target, mark it as visited to avoid retrying
-                lookedAround.add(target);
-                target = findExplorationTarget();
-                continue;
-            }
-
-            for (String step : path) {
-                executeStep(step);
-                safeLookAround();
+            } else {
+                navigateToTarget(target);
             }
 
             target = findExplorationTarget();
+        }
+    }
+
+    private void navigateToTarget(Position target) {
+        View[][] map = goldMineExplorer.getViewMap();
+        List<String> path = findPath(map, goldMineExplorer.currentPosition(), target);
+
+        if (path.isEmpty()) {
+            lookedAround.add(target);
+            return;
+        }
+
+        for (String step : path) {
+            executeStep(step);
+            safeLookAround();
         }
     }
 
@@ -218,16 +218,19 @@ public class AStarExplorer implements Explorer {
         while (node.parent != null) {
             int dx = node.position.x() - node.parent.position.x();
             int dy = node.position.y() - node.parent.position.y();
-
-            if (dx == 1) path.add("right");
-            else if (dx == -1) path.add("left");
-            else if (dy == 1) path.add("down");
-            else if (dy == -1) path.add("up");
-
+            path.add(directionFromDelta(dx, dy));
             node = node.parent;
         }
         Collections.reverse(path);
         return path;
+    }
+
+    private String directionFromDelta(int dx, int dy) {
+        if (dx == 1) return "right";
+        if (dx == -1) return "left";
+        if (dy == 1) return "down";
+        if (dy == -1) return "up";
+        throw new IllegalArgumentException("Invalid delta: " + dx + ", " + dy);
     }
 
     private static class Node {

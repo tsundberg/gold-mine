@@ -15,6 +15,11 @@ public class NaiveExplorer implements Explorer {
 
     @Override
     public void explore() {
+        exploreEdges();
+        exploreUnknownCells();
+    }
+
+    private void exploreEdges() {
         View exit = new View("Exit");
         Position position = goldMineExplorer.currentPosition();
 
@@ -42,7 +47,9 @@ public class NaiveExplorer implements Explorer {
             position = exploreUp(position, exit);
             exploreLeft(position, exit);
         }
+    }
 
+    private void exploreUnknownCells() {
         Position unknownPosition = unknown();
         while (unknownPosition != null) {
             visit(unknownPosition);
@@ -100,9 +107,7 @@ public class NaiveExplorer implements Explorer {
             goldMineExplorer.lookAround();
         }
 
-        maxDimension = new Position(Math.max(maxDimension.x(), position.x()),
-                Math.max(maxDimension.y(), position.y()));
-
+        updateMaxDimension(position);
         return position;
     }
 
@@ -119,9 +124,7 @@ public class NaiveExplorer implements Explorer {
             goldMineExplorer.lookAround();
         }
 
-        maxDimension = new Position(Math.max(maxDimension.x(), position.x()),
-                Math.max(maxDimension.y(), position.y()));
-
+        updateMaxDimension(position);
         return position;
     }
 
@@ -138,9 +141,7 @@ public class NaiveExplorer implements Explorer {
             goldMineExplorer.lookAround();
         }
 
-        maxDimension = new Position(Math.max(maxDimension.x(), position.x()),
-                Math.max(maxDimension.y(), position.y()));
-
+        updateMaxDimension(position);
         return position;
     }
 
@@ -156,9 +157,12 @@ public class NaiveExplorer implements Explorer {
             goldMineExplorer.lookAround();
         }
 
+        updateMaxDimension(position);
+        return position;
+    }
+
+    private void updateMaxDimension(Position position) {
         maxDimension = new Position(Math.max(maxDimension.x(), position.x()),
                 Math.max(maxDimension.y(), position.y()));
-
-        return position;
     }
 }

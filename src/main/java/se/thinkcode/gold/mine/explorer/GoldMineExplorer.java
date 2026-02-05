@@ -164,48 +164,24 @@ public class GoldMineExplorer {
         }
 
         View wall = new View("Wall");
+        int bottom = map.length - 1;
+        int right = map[0].length - 1;
 
-        // Upper, left corner
-        int depth = 0;
-        int right = 0;
-        if (map[depth][right] == null &&
-                map[depth][right + 1] != null &&
-                map[depth][right + 1].equals(wall) &&
-                map[depth + 1][right] != null) {
-            map[depth][right] = wall;
-        }
-
-        // Upper, right corner
-        depth = 0;
-        right = map[0].length - 1;
-        if (map[0][right] == null &&
-                map[depth][right - 1] != null &&
-                map[depth][right - 1].equals(wall) &&
-                map[depth + 1][right] != null) {
-            map[depth][right] = wall;
-        }
-
-        // Lower, left corner
-        depth = map.length - 1;
-        right = 0;
-        if (map[depth][0] == null &&
-                map[depth][right + 1] != null &&
-                map[depth][right + 1].equals(wall) &&
-                map[depth - 1][right] != null) {
-            map[depth][right] = wall;
-        }
-
-        // Lower, right corner
-        depth = map.length - 1;
-        right = map[depth].length - 1;
-        if (map[depth][right] == null &&
-                map[depth][right - 1] != null &&
-                map[depth][right - 1].equals(wall) &&
-                map[depth - 1][right] != null) {
-            map[depth][right] = wall;
-        }
+        fixCorner(map, 0, 0, 1, 1, wall);
+        fixCorner(map, 0, right, 1, right - 1, wall);
+        fixCorner(map, bottom, 0, bottom - 1, 1, wall);
+        fixCorner(map, bottom, right, bottom - 1, right - 1, wall);
 
         return map;
+    }
+
+    private void fixCorner(View[][] map, int row, int col, int adjacentRow, int adjacentCol, View wall) {
+        if (map[row][col] == null &&
+                map[row][adjacentCol] != null &&
+                map[row][adjacentCol].equals(wall) &&
+                map[adjacentRow][col] != null) {
+            map[row][col] = wall;
+        }
     }
 
     public void lookAround() {
@@ -221,34 +197,11 @@ public class GoldMineExplorer {
             return "";
         }
 
-        View exit = new View("Exit");
-        View wall = new View("Wall");
-        View home = new View("Home");
-        View empty = new View("Empty");
-
         List<String> matrix = new ArrayList<>();
         for (View[] views : map) {
             StringBuilder row = new StringBuilder();
             for (View view : views) {
-                if (view == null) {
-                    row.append("?");
-                    continue;
-                }
-                if (view.equals(exit)) {
-                    row.append("E");
-                    continue;
-                }
-                if (view.equals(wall)) {
-                    row.append("X");
-                    continue;
-                }
-                if (view.equals(home)) {
-                    row.append("H");
-                    continue;
-                }
-                if (view.equals(empty)) {
-                    row.append(" ");
-                }
+                row.append(viewToChar(view));
             }
             matrix.add(row.toString());
         }
@@ -259,6 +212,15 @@ public class GoldMineExplorer {
         }
 
         return transformedMap.toString();
+    }
+
+    private char viewToChar(View view) {
+        if (view == null) return '?';
+        if (view.equals(new View("Exit"))) return 'E';
+        if (view.equals(new View("Wall"))) return 'X';
+        if (view.equals(new View("Home"))) return 'H';
+        if (view.equals(new View("Empty"))) return ' ';
+        return '?';
     }
 
     public View[][] getViewMap() {
