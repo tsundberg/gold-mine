@@ -32,7 +32,7 @@ public class GoldMineGameTest {
 
     @Test
     void should_see_wall_to_the_left_level_0() {
-        View expected = new View("Wall");
+        View expected = View.WALL;
         GoldMineGame goldMine = new GoldMineGame(level0);
 
         View actual = goldMine.lookLeft();
@@ -42,7 +42,7 @@ public class GoldMineGameTest {
 
     @Test
     void should_see_wall_to_the_right_level_0() {
-        View expected = new View("Wall");
+        View expected = View.WALL;
         GoldMineGame goldMine = new GoldMineGame(level0);
 
         View actual = goldMine.lookRight();
@@ -52,7 +52,7 @@ public class GoldMineGameTest {
 
     @Test
     void should_see_wall_up_level_0() {
-        View expected = new View("Wall");
+        View expected = View.WALL;
         GoldMineGame goldMine = new GoldMineGame(level0);
 
         View actual = goldMine.lookUp();
@@ -62,7 +62,7 @@ public class GoldMineGameTest {
 
     @Test
     void should_see_wall_down_level_0() {
-        View expected = new View("Wall");
+        View expected = View.WALL;
         GoldMineGame goldMine = new GoldMineGame(level0);
 
         View actual = goldMine.lookDown();
@@ -72,7 +72,7 @@ public class GoldMineGameTest {
 
     @Test
     void should_not_see_wall_to_the_left_level_1() {
-        View expected = new View("Empty");
+        View expected = View.EMPTY;
         GoldMineGame goldMine = new GoldMineGame(level1);
 
         View actual = goldMine.lookLeft();
@@ -82,7 +82,7 @@ public class GoldMineGameTest {
 
     @Test
     void should_not_see_wall_to_the_right_level_1() {
-        View expected = new View("Empty");
+        View expected = View.EMPTY;
         GoldMineGame goldMine = new GoldMineGame(level1);
 
         View actual = goldMine.lookRight();
@@ -92,7 +92,7 @@ public class GoldMineGameTest {
 
     @Test
     void should_not_see_wall_up_level_1() {
-        View expected = new View("Empty");
+        View expected = View.EMPTY;
         GoldMineGame goldMine = new GoldMineGame(level1);
 
         View actual = goldMine.lookUp();
@@ -102,7 +102,7 @@ public class GoldMineGameTest {
 
     @Test
     void should_not_see_wall_down_level_1() {
-        View expected = new View("Empty");
+        View expected = View.EMPTY;
         GoldMineGame goldMine = new GoldMineGame(level1);
 
         View actual = goldMine.lookDown();
@@ -213,6 +213,6 @@ public class GoldMineGameTest {
 
         View actual = goldMine.getView(3, 4);
 
-        assertThat(actual).isEqualTo(new View("Exit"));
+        assertThat(actual).isEqualTo(View.EXIT);
     }
 }

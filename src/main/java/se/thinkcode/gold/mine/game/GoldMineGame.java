@@ -2,6 +2,7 @@ package se.thinkcode.gold.mine.game;
 
 import se.thinkcode.gold.mine.model.Position;
 import se.thinkcode.gold.mine.model.View;
+import se.thinkcode.gold.mine.model.ViewType;
 
 public class GoldMineGame {
     private final char[][] map;
@@ -124,19 +125,6 @@ public class GoldMineGame {
     }
 
     View getView(int y, int x) {
-        if (map[y][x] == 'X') {
-            return new View("Wall");
-        }
-        if (map[y][x] == 'E') {
-            return new View("Exit");
-        }
-        if (map[y][x] == 'H') {
-            return new View("Home");
-        }
-        if (map[y][x] == ' ') {
-            return new View("Empty");
-        }
-
-        throw new RuntimeException("Unknown map element");
+        return new View(ViewType.fromChar(map[y][x]));
     }
 }

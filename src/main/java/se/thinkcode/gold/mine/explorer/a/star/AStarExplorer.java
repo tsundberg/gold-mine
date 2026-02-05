@@ -170,7 +170,7 @@ public class AStarExplorer implements Explorer {
 
     private boolean isUnvisitedEdgeCell(View[][] map, int x, int y) {
         View view = map[y][x];
-        if (view == null || view.equals(MapUtils.WALL)) {
+        if (view == null || view.equals(View.WALL)) {
             return false;
         }
         if (lookedAround.contains(new Position(x, y))) {

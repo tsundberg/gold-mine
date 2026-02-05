@@ -15,9 +15,9 @@ class AStarPathfinderTest {
     @Test
     void should_return_empty_path_when_start_is_goal() {
         View[][] map = {
-                {new View("Wall"), new View("Wall"), new View("Wall")},
-                {new View("Wall"), new View("Home"), new View("Wall")},
-                {new View("Wall"), new View("Wall"), new View("Wall")}
+                {View.WALL, View.WALL, View.WALL},
+                {View.WALL, View.HOME, View.WALL},
+                {View.WALL, View.WALL, View.WALL}
         };
 
         Position start = new Position(1, 1);
@@ -33,11 +33,11 @@ class AStarPathfinderTest {
         List<Direction> expectedSteps = List.of(Direction.DOWN, Direction.DOWN);
 
         View[][] map = {
-                {new View("Wall"), new View("Wall"), new View("Wall"), new View("Wall")},
-                {new View("Wall"), new View("Empty"), new View("Empty"), new View("Wall")},
-                {new View("Wall"), new View("Home"), new View("Empty"), new View("Wall")},
-                {new View("Wall"), new View("Empty"), new View("Empty"), new View("Wall")},
-                {new View("Wall"), new View("Exit"), new View("Wall"), new View("Wall")}
+                {View.WALL, View.WALL, View.WALL, View.WALL},
+                {View.WALL, View.EMPTY, View.EMPTY, View.WALL},
+                {View.WALL, View.HOME, View.EMPTY, View.WALL},
+                {View.WALL, View.EMPTY, View.EMPTY, View.WALL},
+                {View.WALL, View.EXIT, View.WALL, View.WALL}
         };
 
         Position start = new Position(1, 2);
@@ -51,11 +51,11 @@ class AStarPathfinderTest {
     @Test
     void should_find_path_with_a_turn() {
         View[][] map = {
-                {new View("Wall"), new View("Wall"), new View("Wall"), new View("Wall")},
-                {new View("Wall"), new View("Home"), new View("Empty"), new View("Wall")},
-                {new View("Wall"), new View("Wall"), new View("Empty"), new View("Wall")},
-                {new View("Wall"), new View("Wall"), new View("Exit"), new View("Wall")},
-                {new View("Wall"), new View("Wall"), new View("Wall"), new View("Wall")}
+                {View.WALL, View.WALL, View.WALL, View.WALL},
+                {View.WALL, View.HOME, View.EMPTY, View.WALL},
+                {View.WALL, View.WALL, View.EMPTY, View.WALL},
+                {View.WALL, View.WALL, View.EXIT, View.WALL},
+                {View.WALL, View.WALL, View.WALL, View.WALL}
         };
 
         Position start = new Position(1, 1);
@@ -69,11 +69,11 @@ class AStarPathfinderTest {
     @Test
     void should_return_empty_path_when_no_path_exists() {
         View[][] map = {
-                {new View("Wall"), new View("Wall"), new View("Wall")},
-                {new View("Wall"), new View("Home"), new View("Wall")},
-                {new View("Wall"), new View("Wall"), new View("Wall")},
-                {new View("Wall"), new View("Exit"), new View("Wall")},
-                {new View("Wall"), new View("Wall"), new View("Wall")}
+                {View.WALL, View.WALL, View.WALL},
+                {View.WALL, View.HOME, View.WALL},
+                {View.WALL, View.WALL, View.WALL},
+                {View.WALL, View.EXIT, View.WALL},
+                {View.WALL, View.WALL, View.WALL}
         };
 
         Position start = new Position(1, 1);

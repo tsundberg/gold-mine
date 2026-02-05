@@ -20,7 +20,7 @@ public class NaiveExplorer implements Explorer {
     }
 
     private void exploreEdges() {
-        View exit = new View("Exit");
+        View exit = View.EXIT;
         Position position = goldMineExplorer.currentPosition();
 
         if (position.y() == 0) {

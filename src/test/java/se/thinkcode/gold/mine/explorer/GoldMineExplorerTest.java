@@ -117,7 +117,7 @@ public class GoldMineExplorerTest {
 
         assertThat(actualDown).isEqualTo(new Position(2, 3));
         assertThat(actuaRight).isEqualTo(new Position(3, 3));
-        assertThat(actualExit).isEqualTo(new View("Exit"));
+        assertThat(actualExit).isEqualTo(View.EXIT);
     }
 
     @Test
@@ -133,19 +133,19 @@ public class GoldMineExplorerTest {
         assertThat(actualPosition).isEqualTo(expected);
 
         View actualView = explorer.lookUp();
-        View expectedView = new View("Wall");
+        View expectedView = View.WALL;
         assertThat(actualView).isEqualTo(expectedView);
 
         actualView = explorer.lookRight();
-        expectedView = new View("Empty");
+        expectedView = View.EMPTY;
         assertThat(actualView).isEqualTo(expectedView);
 
         actualView = explorer.lookLeft();
-        expectedView = new View("Empty");
+        expectedView = View.EMPTY;
         assertThat(actualView).isEqualTo(expectedView);
 
         actualView = explorer.lookDown();
-        expectedView = new View("Home");
+        expectedView = View.HOME;
         assertThat(actualView).isEqualTo(expectedView);
 
 
@@ -154,19 +154,19 @@ public class GoldMineExplorerTest {
         assertThat(actualPosition).isEqualTo(expected);
 
         actualView = explorer.lookUp();
-        expectedView = new View("Wall");
+        expectedView = View.WALL;
         assertThat(actualView).isEqualTo(expectedView);
 
         actualView = explorer.lookRight();
-        expectedView = new View("Empty");
+        expectedView = View.EMPTY;
         assertThat(actualView).isEqualTo(expectedView);
 
         actualView = explorer.lookLeft();
-        expectedView = new View("Wall");
+        expectedView = View.WALL;
         assertThat(actualView).isEqualTo(expectedView);
 
         actualView = explorer.lookDown();
-        expectedView = new View("Empty");
+        expectedView = View.EMPTY;
         assertThat(actualView).isEqualTo(expectedView);
 
 
@@ -175,19 +175,19 @@ public class GoldMineExplorerTest {
         assertThat(actualPosition).isEqualTo(expected);
 
         actualView = explorer.lookUp();
-        expectedView = new View("Empty");
+        expectedView = View.EMPTY;
         assertThat(actualView).isEqualTo(expectedView);
 
         actualView = explorer.lookRight();
-        expectedView = new View("Home");
+        expectedView = View.HOME;
         assertThat(actualView).isEqualTo(expectedView);
 
         actualView = explorer.lookLeft();
-        expectedView = new View("Wall");
+        expectedView = View.WALL;
         assertThat(actualView).isEqualTo(expectedView);
 
         actualView = explorer.lookDown();
-        expectedView = new View("Empty");
+        expectedView = View.EMPTY;
         assertThat(actualView).isEqualTo(expectedView);
 
 
@@ -196,19 +196,19 @@ public class GoldMineExplorerTest {
         assertThat(actualPosition).isEqualTo(expected);
 
         actualView = explorer.lookUp();
-        expectedView = new View("Empty");
+        expectedView = View.EMPTY;
         assertThat(actualView).isEqualTo(expectedView);
 
         actualView = explorer.lookRight();
-        expectedView = new View("Empty");
+        expectedView = View.EMPTY;
         assertThat(actualView).isEqualTo(expectedView);
 
         actualView = explorer.lookLeft();
-        expectedView = new View("Wall");
+        expectedView = View.WALL;
         assertThat(actualView).isEqualTo(expectedView);
 
         actualView = explorer.lookDown();
-        expectedView = new View("Wall");
+        expectedView = View.WALL;
         assertThat(actualView).isEqualTo(expectedView);
 
 
@@ -217,19 +217,19 @@ public class GoldMineExplorerTest {
         assertThat(actualPosition).isEqualTo(expected);
 
         actualView = explorer.lookUp();
-        expectedView = new View("Home");
+        expectedView = View.HOME;
         assertThat(actualView).isEqualTo(expectedView);
 
         actualView = explorer.lookRight();
-        expectedView = new View("Empty");
+        expectedView = View.EMPTY;
         assertThat(actualView).isEqualTo(expectedView);
 
         actualView = explorer.lookLeft();
-        expectedView = new View("Empty");
+        expectedView = View.EMPTY;
         assertThat(actualView).isEqualTo(expectedView);
 
         actualView = explorer.lookDown();
-        expectedView = new View("Wall");
+        expectedView = View.WALL;
         assertThat(actualView).isEqualTo(expectedView);
 
 
@@ -238,19 +238,19 @@ public class GoldMineExplorerTest {
         assertThat(actualPosition).isEqualTo(expected);
 
         actualView = explorer.lookUp();
-        expectedView = new View("Empty");
+        expectedView = View.EMPTY;
         assertThat(actualView).isEqualTo(expectedView);
 
         actualView = explorer.lookRight();
-        expectedView = new View("Exit");
+        expectedView = View.EXIT;
         assertThat(actualView).isEqualTo(expectedView);
 
         actualView = explorer.lookLeft();
-        expectedView = new View("Empty");
+        expectedView = View.EMPTY;
         assertThat(actualView).isEqualTo(expectedView);
 
         actualView = explorer.lookDown();
-        expectedView = new View("Wall");
+        expectedView = View.WALL;
         assertThat(actualView).isEqualTo(expectedView);
     }
 

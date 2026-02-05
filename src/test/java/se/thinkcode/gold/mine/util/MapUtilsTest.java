@@ -21,8 +21,8 @@ class MapUtilsTest {
     @Test
     void should_identify_wall_as_not_walkable() {
         View[][] map = {
-                {new View("Wall"), new View("Empty")},
-                {new View("Empty"), new View("Exit")}
+                {View.WALL, View.EMPTY},
+                {View.EMPTY, View.EXIT}
         };
 
         boolean actual = MapUtils.isNotWalkable(map, 0, 0);
@@ -33,8 +33,8 @@ class MapUtilsTest {
     @Test
     void should_identify_out_of_bounds_as_not_walkable() {
         View[][] map = {
-                {new View("Empty"), new View("Empty")},
-                {new View("Empty"), new View("Empty")}
+                {View.EMPTY, View.EMPTY},
+                {View.EMPTY, View.EMPTY}
         };
 
         assertThat(MapUtils.isNotWalkable(map, -1, 0)).isTrue();
@@ -46,8 +46,8 @@ class MapUtilsTest {
     @Test
     void should_identify_null_as_not_walkable() {
         View[][] map = {
-                {new View("Empty"), null},
-                {new View("Empty"), new View("Empty")}
+                {View.EMPTY, null},
+                {View.EMPTY, View.EMPTY}
         };
 
         boolean actual = MapUtils.isNotWalkable(map, 1, 0);
@@ -58,8 +58,8 @@ class MapUtilsTest {
     @Test
     void should_identify_empty_cell_as_walkable() {
         View[][] map = {
-                {new View("Wall"), new View("Empty")},
-                {new View("Empty"), new View("Exit")}
+                {View.WALL, View.EMPTY},
+                {View.EMPTY, View.EXIT}
         };
 
         boolean actual = MapUtils.isNotWalkable(map, 1, 0);

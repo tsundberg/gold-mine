@@ -163,7 +163,7 @@ public class GoldMineExplorer {
             return map;
         }
 
-        View wall = new View("Wall");
+        View wall = View.WALL;
         int bottom = map.length - 1;
         int right = map[0].length - 1;
 
@@ -225,19 +225,7 @@ public class GoldMineExplorer {
         if (view == null) {
             return '?';
         }
-        if (view.equals(new View("Exit"))) {
-            return 'E';
-        }
-        if (view.equals(new View("Wall"))) {
-            return 'X';
-        }
-        if (view.equals(new View("Home"))) {
-            return 'H';
-        }
-        if (view.equals(new View("Empty"))) {
-            return ' ';
-        }
-        return '?';
+        return view.type().toChar();
     }
 
     public View[][] getViewMap() {

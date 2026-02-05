@@ -39,7 +39,7 @@ public class InMemoryGoldMineTest {
 
         View actual = goldMine.look();
 
-        assertThat(actual).isEqualTo(new View("Home"));
+        assertThat(actual).isEqualTo(View.HOME);
     }
 
     @Test
@@ -49,7 +49,7 @@ public class InMemoryGoldMineTest {
 
         View actual = goldMine.lookUp();
 
-        assertThat(actual).isEqualTo(new View("Wall"));
+        assertThat(actual).isEqualTo(View.WALL);
     }
 
     @Test
@@ -59,7 +59,7 @@ public class InMemoryGoldMineTest {
 
         View actual = goldMine.lookDown();
 
-        assertThat(actual).isEqualTo(new View("Wall"));
+        assertThat(actual).isEqualTo(View.WALL);
     }
 
     @Test
@@ -69,7 +69,7 @@ public class InMemoryGoldMineTest {
 
         View actual = goldMine.lookLeft();
 
-        assertThat(actual).isEqualTo(new View("Wall"));
+        assertThat(actual).isEqualTo(View.WALL);
     }
 
     @Test
@@ -79,7 +79,7 @@ public class InMemoryGoldMineTest {
 
         View actual = goldMine.lookRight();
 
-        assertThat(actual).isEqualTo(new View("Wall"));
+        assertThat(actual).isEqualTo(View.WALL);
     }
 
     @Test
