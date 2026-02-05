@@ -24,29 +24,41 @@ public class NaiveExplorer implements Explorer {
         Position position = goldMineExplorer.currentPosition();
 
         if (position.y() == 0) {
-            position = exploreDown(position, exit);
-            position = exploreLeft(position, exit);
-            position = exploreUp(position, exit);
-            position = exploreRight(position, exit);
-            position = exploreDown(position, exit);
-            exploreLeft(position, exit);
+            position = exploreFromTopRow(position, exit);
         }
         if (position.x() == 0) {
-            position = exploreRight(position, exit);
-            position = exploreDown(position, exit);
-            position = exploreLeft(position, exit);
-            position = exploreUp(position, exit);
-            position = exploreRight(position, exit);
-            position = exploreDown(position, exit);
-            exploreLeft(position, exit);
+            exploreFromLeftColumn(position, exit);
         } else {
-            position = exploreUp(position, exit);
-            position = exploreLeft(position, exit);
-            position = exploreDown(position, exit);
-            position = exploreRight(position, exit);
-            position = exploreUp(position, exit);
-            exploreLeft(position, exit);
+            exploreFromRightColumn(position, exit);
         }
+    }
+
+    private Position exploreFromTopRow(Position position, View exit) {
+        position = exploreDown(position, exit);
+        position = exploreLeft(position, exit);
+        position = exploreUp(position, exit);
+        position = exploreRight(position, exit);
+        position = exploreDown(position, exit);
+        return exploreLeft(position, exit);
+    }
+
+    private void exploreFromLeftColumn(Position position, View exit) {
+        position = exploreRight(position, exit);
+        position = exploreDown(position, exit);
+        position = exploreLeft(position, exit);
+        position = exploreUp(position, exit);
+        position = exploreRight(position, exit);
+        position = exploreDown(position, exit);
+        exploreLeft(position, exit);
+    }
+
+    private void exploreFromRightColumn(Position position, View exit) {
+        position = exploreUp(position, exit);
+        position = exploreLeft(position, exit);
+        position = exploreDown(position, exit);
+        position = exploreRight(position, exit);
+        position = exploreUp(position, exit);
+        exploreLeft(position, exit);
     }
 
     private void exploreUnknownCells() {
@@ -58,25 +70,26 @@ public class NaiveExplorer implements Explorer {
         }
     }
 
-    private void visit(Position position) {
-        Position currentPosition = goldMineExplorer.currentPosition();
+    private void visit(Position target) {
+        Position current = goldMineExplorer.currentPosition();
+        while (!target.equals(current)) {
+            moveTowards(current, target);
+            current = goldMineExplorer.currentPosition();
+        }
+    }
 
-        while (!position.equals(currentPosition)) {
-            if (currentPosition.y() - position.y() > 0) {
-                goldMineExplorer.up();
-            }
-            if (currentPosition.y() - position.y() < 0) {
-                goldMineExplorer.down();
-            }
-
-            if (currentPosition.x() - position.x() > 0) {
-                goldMineExplorer.left();
-            }
-            if (currentPosition.x() - position.x() < 0) {
-                goldMineExplorer.right();
-            }
-
-            currentPosition = goldMineExplorer.currentPosition();
+    private void moveTowards(Position from, Position to) {
+        if (from.y() - to.y() > 0) {
+            goldMineExplorer.up();
+        }
+        if (from.y() - to.y() < 0) {
+            goldMineExplorer.down();
+        }
+        if (from.x() - to.x() > 0) {
+            goldMineExplorer.left();
+        }
+        if (from.x() - to.x() < 0) {
+            goldMineExplorer.right();
         }
     }
 

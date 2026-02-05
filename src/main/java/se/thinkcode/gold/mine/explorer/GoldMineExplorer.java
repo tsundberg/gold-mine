@@ -142,20 +142,20 @@ public class GoldMineExplorer {
 
     private View[][] growAsNeeded(View[][] map, int y, int x) {
         if (map.length < y || map[0].length < x) {
-            y = Math.max(map.length, y);
-            x = Math.max(map[0].length, x);
-
-            View[][] newMap = new View[y][x];
-            for (y = 0; y < map.length; y++) {
-                for (x = 0; x < map[0].length; x++) {
-                    newMap[y][x] = map[y][x];
-                }
-            }
-
-            return newMap;
+            int newHeight = Math.max(map.length, y);
+            int newWidth = Math.max(map[0].length, x);
+            return copyMap(map, newHeight, newWidth);
         }
 
         return map;
+    }
+
+    private View[][] copyMap(View[][] source, int newHeight, int newWidth) {
+        View[][] newMap = new View[newHeight][newWidth];
+        for (int y = 0; y < source.length; y++) {
+            System.arraycopy(source[y], 0, newMap[y], 0, source[0].length);
+        }
+        return newMap;
     }
 
     private View[][] fixCorners(View[][] map) {
@@ -197,21 +197,28 @@ public class GoldMineExplorer {
             return "";
         }
 
-        List<String> matrix = new ArrayList<>();
+        List<String> rows = buildRows();
+        return joinRows(rows);
+    }
+
+    private List<String> buildRows() {
+        List<String> rows = new ArrayList<>();
         for (View[] views : map) {
             StringBuilder row = new StringBuilder();
             for (View view : views) {
                 row.append(viewToChar(view));
             }
-            matrix.add(row.toString());
+            rows.add(row.toString());
         }
+        return rows;
+    }
 
-        StringBuilder transformedMap = new StringBuilder();
-        for (String row : matrix) {
-            transformedMap.append(row).append("\n");
+    private String joinRows(List<String> rows) {
+        StringBuilder result = new StringBuilder();
+        for (String row : rows) {
+            result.append(row).append("\n");
         }
-
-        return transformedMap.toString();
+        return result.toString();
     }
 
     private char viewToChar(View view) {

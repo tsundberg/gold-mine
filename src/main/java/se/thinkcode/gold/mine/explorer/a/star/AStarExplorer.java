@@ -104,30 +104,15 @@ public class AStarExplorer implements Explorer {
         Position bestTarget = null;
         int bestDistance = Integer.MAX_VALUE;
 
-        int rows = map.length;
-        int cols = map[0].length;
-
-        for (int y = 0; y < rows; y++) {
-            for (int x = 0; x < cols; x++) {
+        for (int y = 0; y < map.length; y++) {
+            for (int x = 0; x < map[0].length; x++) {
                 if (map[y][x] != null) {
                     continue;
                 }
-                int[][] directions = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
-                for (int[] dir : directions) {
-                    int nx = x + dir[0];
-                    int ny = y + dir[1];
-                    if (ny < 0 || ny >= rows || nx < 0 || nx >= cols) {
-                        continue;
-                    }
-                    View view = map[ny][nx];
-                    if (view != null && !view.equals(WALL)) {
-                        Position candidate = new Position(nx, ny);
-                        int distance = manhattan(current, candidate);
-                        if (distance < bestDistance) {
-                            bestDistance = distance;
-                            bestTarget = candidate;
-                        }
-                    }
+                Position candidate = closestWalkableNeighbor(map, x, y, current);
+                if (candidate != null && manhattan(current, candidate) < bestDistance) {
+                    bestDistance = manhattan(current, candidate);
+                    bestTarget = candidate;
                 }
             }
         }
@@ -135,35 +120,66 @@ public class AStarExplorer implements Explorer {
         return bestTarget;
     }
 
+    private Position closestWalkableNeighbor(View[][] map, int x, int y, Position current) {
+        Position best = null;
+        int bestDistance = Integer.MAX_VALUE;
+        int[][] directions = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
+
+        for (int[] dir : directions) {
+            int nx = x + dir[0];
+            int ny = y + dir[1];
+            if (isNotWalkable(map, nx, ny)) {
+                continue;
+            }
+            Position candidate = new Position(nx, ny);
+            int distance = manhattan(current, candidate);
+            if (distance < bestDistance) {
+                bestDistance = distance;
+                best = candidate;
+            }
+        }
+
+        return best;
+    }
+
+    private boolean isNotWalkable(View[][] map, int x, int y) {
+        if (y < 0 || y >= map.length || x < 0 || x >= map[0].length) {
+            return true;
+        }
+        View view = map[y][x];
+        return view == null || view.equals(WALL);
+    }
+
     private Position findNearestUnvisitedEdgeCell(View[][] map, Position current) {
         Position bestTarget = null;
         int bestDistance = Integer.MAX_VALUE;
 
-        int rows = map.length;
-        int cols = map[0].length;
-
-        for (int y = 0; y < rows; y++) {
-            for (int x = 0; x < cols; x++) {
-                View view = map[y][x];
-                if (view == null || view.equals(WALL)) {
+        for (int y = 0; y < map.length; y++) {
+            for (int x = 0; x < map[0].length; x++) {
+                if (!isUnvisitedEdgeCell(map, x, y)) {
                     continue;
                 }
                 Position candidate = new Position(x, y);
-                if (lookedAround.contains(candidate)) {
-                    continue;
-                }
-                boolean isEdge = (x == 0 || x == cols - 1 || y == 0 || y == rows - 1);
-                if (isEdge) {
-                    int distance = manhattan(current, candidate);
-                    if (distance < bestDistance) {
-                        bestDistance = distance;
-                        bestTarget = candidate;
-                    }
+                int distance = manhattan(current, candidate);
+                if (distance < bestDistance) {
+                    bestDistance = distance;
+                    bestTarget = candidate;
                 }
             }
         }
 
         return bestTarget;
+    }
+
+    private boolean isUnvisitedEdgeCell(View[][] map, int x, int y) {
+        View view = map[y][x];
+        if (view == null || view.equals(WALL)) {
+            return false;
+        }
+        if (lookedAround.contains(new Position(x, y))) {
+            return false;
+        }
+        return x == 0 || x == map[0].length - 1 || y == 0 || y == map.length - 1;
     }
 
     public List<String> findPath(View[][] map, Position start, Position goal) {
@@ -173,9 +189,12 @@ public class AStarExplorer implements Explorer {
 
         PriorityQueue<Node> openSet = new PriorityQueue<>(Comparator.comparingInt(n -> n.f));
         Set<Position> closedSet = new HashSet<>();
-
         openSet.add(new Node(start, 0, manhattan(start, goal), null));
 
+        return searchPath(map, goal, openSet, closedSet);
+    }
+
+    private List<String> searchPath(View[][] map, Position goal, PriorityQueue<Node> openSet, Set<Position> closedSet) {
         while (!openSet.isEmpty()) {
             Node current = openSet.poll();
 
@@ -199,19 +218,12 @@ public class AStarExplorer implements Explorer {
         for (int[] dir : directions) {
             int nx = current.position.x() + dir[0];
             int ny = current.position.y() + dir[1];
-
-            if (ny < 0 || ny >= map.length || nx < 0 || nx >= map[0].length) {
+            if (isNotWalkable(map, nx, ny)) {
                 continue;
             }
 
             Position neighbor = new Position(nx, ny);
-
             if (closedSet.contains(neighbor)) {
-                continue;
-            }
-
-            View view = map[ny][nx];
-            if (view == null || view.equals(WALL)) {
                 continue;
             }
 
@@ -253,20 +265,6 @@ public class AStarExplorer implements Explorer {
         throw new IllegalArgumentException("Invalid delta: " + dx + ", " + dy);
     }
 
-    private static class Node {
-        final Position position;
-        final int g;
-        final int f;
-        final Node parent;
-
-        Node(Position position, int g, int f, Node parent) {
-            this.position = position;
-            this.g = g;
-            this.f = f;
-            this.parent = parent;
-        }
+    private record Node(Position position, int g, int f, Node parent) {
     }
-
-    // https://medium.com/@AlexanderObregon/pathfinding-with-the-a-star-algorithm-in-java-3a66446a2352
-    // https://en.wikipedia.org/wiki/A*_search_algorithm
 }
