@@ -215,11 +215,21 @@ public class GoldMineExplorer {
     }
 
     private char viewToChar(View view) {
-        if (view == null) return '?';
-        if (view.equals(new View("Exit"))) return 'E';
-        if (view.equals(new View("Wall"))) return 'X';
-        if (view.equals(new View("Home"))) return 'H';
-        if (view.equals(new View("Empty"))) return ' ';
+        if (view == null) {
+            return '?';
+        }
+        if (view.equals(new View("Exit"))) {
+            return 'E';
+        }
+        if (view.equals(new View("Wall"))) {
+            return 'X';
+        }
+        if (view.equals(new View("Home"))) {
+            return 'H';
+        }
+        if (view.equals(new View("Empty"))) {
+            return ' ';
+        }
         return '?';
     }
 

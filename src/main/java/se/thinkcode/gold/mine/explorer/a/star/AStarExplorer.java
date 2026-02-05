@@ -64,11 +64,23 @@ public class AStarExplorer implements Explorer {
     }
 
     private void executeStep(String step) {
-        switch (step) {
-            case "up" -> goldMineExplorer.up();
-            case "down" -> goldMineExplorer.down();
-            case "left" -> goldMineExplorer.left();
-            case "right" -> goldMineExplorer.right();
+        if ("up".equals(step)) {
+            goldMineExplorer.up();
+            return;
+        }
+
+        if ("down".equals(step)) {
+            goldMineExplorer.down();
+            return;
+        }
+
+        if ("left".equals(step)) {
+            goldMineExplorer.left();
+            return;
+        }
+
+        if ("right".equals(step)) {
+            goldMineExplorer.right();
         }
     }
 
@@ -226,10 +238,18 @@ public class AStarExplorer implements Explorer {
     }
 
     private String directionFromDelta(int dx, int dy) {
-        if (dx == 1) return "right";
-        if (dx == -1) return "left";
-        if (dy == 1) return "down";
-        if (dy == -1) return "up";
+        if (dx == 1) {
+            return "right";
+        }
+        if (dx == -1) {
+            return "left";
+        }
+        if (dy == 1) {
+            return "down";
+        }
+        if (dy == -1) {
+            return "up";
+        }
         throw new IllegalArgumentException("Invalid delta: " + dx + ", " + dy);
     }
 
