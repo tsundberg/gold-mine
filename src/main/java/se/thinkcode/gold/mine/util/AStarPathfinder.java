@@ -1,5 +1,6 @@
 package se.thinkcode.gold.mine.util;
 
+import se.thinkcode.gold.mine.model.Direction;
 import se.thinkcode.gold.mine.model.Position;
 import se.thinkcode.gold.mine.model.View;
 
@@ -7,7 +8,7 @@ import java.util.*;
 
 public class AStarPathfinder {
 
-    public List<String> findPath(View[][] map, Position start, Position goal) {
+    public List<Direction> findPath(View[][] map, Position start, Position goal) {
         if (start.equals(goal)) {
             return List.of();
         }
@@ -19,7 +20,7 @@ public class AStarPathfinder {
         return searchPath(map, goal, openSet, closedSet);
     }
 
-    private List<String> searchPath(View[][] map, Position goal, PriorityQueue<Node> openSet, Set<Position> closedSet) {
+    private List<Direction> searchPath(View[][] map, Position goal, PriorityQueue<Node> openSet, Set<Position> closedSet) {
         while (!openSet.isEmpty()) {
             Node current = openSet.poll();
 
@@ -58,8 +59,8 @@ public class AStarPathfinder {
         }
     }
 
-    private List<String> reconstructPath(Node node) {
-        List<String> path = new ArrayList<>();
+    private List<Direction> reconstructPath(Node node) {
+        List<Direction> path = new ArrayList<>();
         while (node.parent != null) {
             int dx = node.position.x() - node.parent.position.x();
             int dy = node.position.y() - node.parent.position.y();
@@ -70,18 +71,18 @@ public class AStarPathfinder {
         return path;
     }
 
-    private String directionFromDelta(int dx, int dy) {
+    private Direction directionFromDelta(int dx, int dy) {
         if (dx == 1) {
-            return "right";
+            return Direction.RIGHT;
         }
         if (dx == -1) {
-            return "left";
+            return Direction.LEFT;
         }
         if (dy == 1) {
-            return "down";
+            return Direction.DOWN;
         }
         if (dy == -1) {
-            return "up";
+            return Direction.UP;
         }
         throw new IllegalArgumentException("Invalid delta: " + dx + ", " + dy);
     }

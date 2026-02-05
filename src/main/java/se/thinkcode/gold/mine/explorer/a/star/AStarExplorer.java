@@ -2,6 +2,7 @@ package se.thinkcode.gold.mine.explorer.a.star;
 
 import se.thinkcode.gold.mine.explorer.Explorer;
 import se.thinkcode.gold.mine.explorer.GoldMineExplorer;
+import se.thinkcode.gold.mine.model.Direction;
 import se.thinkcode.gold.mine.model.Position;
 import se.thinkcode.gold.mine.model.View;
 import se.thinkcode.gold.mine.util.AStarPathfinder;
@@ -40,14 +41,14 @@ public class AStarExplorer implements Explorer {
 
     private void navigateToTarget(Position target) {
         View[][] map = goldMineExplorer.getViewMap();
-        List<String> path = pathfinder.findPath(map, goldMineExplorer.currentPosition(), target);
+        List<Direction> path = pathfinder.findPath(map, goldMineExplorer.currentPosition(), target);
 
         if (path.isEmpty()) {
             lookedAround.add(target);
             return;
         }
 
-        for (String step : path) {
+        for (Direction step : path) {
             executeStep(step);
             safeLookAround();
         }
@@ -67,23 +68,23 @@ public class AStarExplorer implements Explorer {
         goldMineExplorer.lookDown();
     }
 
-    private void executeStep(String step) {
-        if ("up".equals(step)) {
+    private void executeStep(Direction step) {
+        if (step == Direction.UP) {
             goldMineExplorer.up();
             return;
         }
 
-        if ("down".equals(step)) {
+        if (step == Direction.DOWN) {
             goldMineExplorer.down();
             return;
         }
 
-        if ("left".equals(step)) {
+        if (step == Direction.LEFT) {
             goldMineExplorer.left();
             return;
         }
 
-        if ("right".equals(step)) {
+        if (step == Direction.RIGHT) {
             goldMineExplorer.right();
         }
     }

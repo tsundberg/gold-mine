@@ -1,6 +1,7 @@
 package se.thinkcode.gold.mine.util;
 
 import org.junit.jupiter.api.Test;
+import se.thinkcode.gold.mine.model.Direction;
 import se.thinkcode.gold.mine.model.Position;
 import se.thinkcode.gold.mine.model.View;
 
@@ -22,14 +23,14 @@ class AStarPathfinderTest {
         Position start = new Position(1, 1);
         Position goal = new Position(1, 1);
 
-        List<String> actual = pathfinder.findPath(map, start, goal);
+        List<Direction> actual = pathfinder.findPath(map, start, goal);
 
         assertThat(actual).isEmpty();
     }
 
     @Test
     void should_find_path_to_exit() {
-        List<String> expectedSteps = List.of("down", "down");
+        List<Direction> expectedSteps = List.of(Direction.DOWN, Direction.DOWN);
 
         View[][] map = {
                 {new View("Wall"), new View("Wall"), new View("Wall"), new View("Wall")},
@@ -42,7 +43,7 @@ class AStarPathfinderTest {
         Position start = new Position(1, 2);
         Position goal = new Position(1, 4);
 
-        List<String> actual = pathfinder.findPath(map, start, goal);
+        List<Direction> actual = pathfinder.findPath(map, start, goal);
 
         assertThat(actual).isEqualTo(expectedSteps);
     }
@@ -60,9 +61,9 @@ class AStarPathfinderTest {
         Position start = new Position(1, 1);
         Position goal = new Position(2, 3);
 
-        List<String> actual = pathfinder.findPath(map, start, goal);
+        List<Direction> actual = pathfinder.findPath(map, start, goal);
 
-        assertThat(actual).isEqualTo(List.of("right", "down", "down"));
+        assertThat(actual).isEqualTo(List.of(Direction.RIGHT, Direction.DOWN, Direction.DOWN));
     }
 
     @Test
@@ -78,7 +79,7 @@ class AStarPathfinderTest {
         Position start = new Position(1, 1);
         Position goal = new Position(1, 3);
 
-        List<String> actual = pathfinder.findPath(map, start, goal);
+        List<Direction> actual = pathfinder.findPath(map, start, goal);
 
         assertThat(actual).isEmpty();
     }
