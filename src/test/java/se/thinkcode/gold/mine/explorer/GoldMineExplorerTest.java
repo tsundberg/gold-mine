@@ -1,6 +1,5 @@
 package se.thinkcode.gold.mine.explorer;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -321,7 +320,6 @@ public class GoldMineExplorerTest {
 
     @ParameterizedTest
     @MethodSource("levels_a_star")
-    @Disabled
     void should_explore_all_levels_with_a_star_explorer(Level level) {
         GoldMine goldMine = new GoldMine(level);
         GoldMineExplorer goldMineExplorer = new GoldMineExplorer(goldMine);
@@ -338,8 +336,7 @@ public class GoldMineExplorerTest {
 
     static List<Level> levels_a_star() {
         return List.of(
-                level1
-                /*,
+                level1,
                 level2,
                 level3,
                 level4,
@@ -347,7 +344,6 @@ public class GoldMineExplorerTest {
                 level6,
                 level7,
                 level8
-                 */
         );
     }
 

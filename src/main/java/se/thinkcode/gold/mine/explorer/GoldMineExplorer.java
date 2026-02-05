@@ -11,6 +11,8 @@ public class GoldMineExplorer {
     private final GoldMine goldMine;
     private Position exit = null;
     private View[][] map = null;
+    private int mineWidth = -1;
+    private int mineHeight = -1;
 
     public GoldMineExplorer(GoldMine goldMine) {
         this.goldMine = goldMine;
@@ -64,12 +66,20 @@ public class GoldMineExplorer {
     }
 
     public View lookRight() {
-        View view = goldMine.lookRight();
         Position position = goldMine.currentPosition();
-        Position rightPosition = getRightPosition(position);
-        updateMap(rightPosition, view);
+        if (mineWidth > 0 && position.x() + 1 >= mineWidth) {
+            return null;
+        }
 
-        return view;
+        try {
+            View view = goldMine.lookRight();
+            Position rightPosition = getRightPosition(position);
+            updateMap(rightPosition, view);
+            return view;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            mineWidth = position.x() + 1;
+            return null;
+        }
     }
 
     private Position getRightPosition(Position position) {
@@ -90,12 +100,20 @@ public class GoldMineExplorer {
     }
 
     public View lookDown() {
-        View view = goldMine.lookDown();
         Position position = goldMine.currentPosition();
-        Position downPosition = getDownPosition(position);
-        updateMap(downPosition, view);
+        if (mineHeight > 0 && position.y() + 1 >= mineHeight) {
+            return null;
+        }
 
-        return view;
+        try {
+            View view = goldMine.lookDown();
+            Position downPosition = getDownPosition(position);
+            updateMap(downPosition, view);
+            return view;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            mineHeight = position.y() + 1;
+            return null;
+        }
     }
 
     private Position getDownPosition(Position position) {
@@ -141,6 +159,10 @@ public class GoldMineExplorer {
     }
 
     private View[][] fixCorners(View[][] map) {
+        if (map.length < 2 || map[0].length < 2) {
+            return map;
+        }
+
         View wall = new View("Wall");
 
         // Upper, left corner
@@ -237,6 +259,10 @@ public class GoldMineExplorer {
         }
 
         return transformedMap.toString();
+    }
+
+    public View[][] getViewMap() {
+        return map;
     }
 
     public View getView(Position position) {
