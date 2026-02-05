@@ -41,7 +41,8 @@ This project follows strict Test-Driven Development. Every code change must go t
 3. **Refactor** — Clean up the code while keeping all tests green. Run tests after each change.
 
 Never write production code without a failing test that demands it. Never skip the step of verifying the test fails
-before writing the implementation.
+before writing the implementation. The TDD cycle for new code takes priority over keeping all other tests green. It is
+acceptable for existing tests to temporarily not compile while you are in the red phase.
 
 ## Code Style
 
