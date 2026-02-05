@@ -47,7 +47,8 @@ before writing the implementation.
 
 - Each method should operate at a single level of abstraction. If a method mixes high-level orchestration with low-level
   details, extract the details into private methods.
-- Keep methods short. When a method grows long, break it up by extracting well-named private methods.
+- Keep methods short. Methods longer than 15 lines should be considered for refactoring into smaller methods with higher
+  abstraction levels.
 - Always use braces around `if` statement bodies, even for one-liners.
 - Prefer `if` with a return over `switch` statements.
 
