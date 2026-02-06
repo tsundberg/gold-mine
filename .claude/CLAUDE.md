@@ -44,6 +44,9 @@ Never write production code without a failing test that demands it. Never skip t
 before writing the implementation. The TDD cycle for new code takes priority over keeping all other tests green. It is
 acceptable for existing tests to temporarily not compile while you are in the red phase.
 
+**Review gate:** Before writing or changing a test, present it to the user with a short motivation explaining *why* the
+test is needed. Wait for approval before proceeding to the green phase. Do this for every TDD cycle.
+
 ## Code Style
 
 - Each method should operate at a single level of abstraction. If a method mixes high-level orchestration with low-level
@@ -52,6 +55,7 @@ acceptable for existing tests to temporarily not compile while you are in the re
   abstraction levels.
 - Always use braces around `if` statement bodies, even for one-liners.
 - Prefer `if` with a return over `switch` statements.
+- Never use the ternary operator (`condition ? a : b`). Use an `if`/`else` block instead.
 
 ## Conventions
 
