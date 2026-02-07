@@ -1,12 +1,12 @@
 package se.thinkcode.gold.mine.game;
 
-import se.thinkcode.gold.mine.model.Position;
-import se.thinkcode.gold.mine.model.View;
-import se.thinkcode.gold.mine.model.ViewType;
+import se.thinkcode.gold.mine.model.*;
 
 public class GoldMineGame {
     private final char[][] map;
     private Position position = null;
+    private final GoldStash stash = new GoldStash();
+    private final Points points = new Points();
 
     public GoldMineGame(Level level) {
         map = createMap(level);
@@ -126,5 +126,39 @@ public class GoldMineGame {
 
     View getView(int y, int x) {
         return new View(ViewType.fromChar(map[y][x]));
+    }
+
+    public void pickUpGold() {
+        int x = position.x();
+        int y = position.y();
+
+        char content = map[y][x];
+        ViewType currentContent = ViewType.fromChar(content);
+
+        if (currentContent.equals(ViewType.GOLD)) {
+            stash.add();
+            map[y][x] = ' ';
+        }
+    }
+
+    public void emptyGoldStash() {
+        int x = position.x();
+        int y = position.y();
+
+        char content = map[y][x];
+        ViewType currentContent = ViewType.fromChar(content);
+
+        if (currentContent.equals(ViewType.HOME)) {
+            int gold = stash.empty();
+            points.add(gold);
+        }
+    }
+
+    public GoldStash currentGoldStash() {
+        return stash;
+    }
+
+    public Points currentPoints() {
+        return points;
     }
 }

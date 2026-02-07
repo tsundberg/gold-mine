@@ -1,6 +1,8 @@
 package se.thinkcode.gold.mine.game;
 
 import org.junit.jupiter.api.Test;
+import se.thinkcode.gold.mine.model.GoldStash;
+import se.thinkcode.gold.mine.model.Points;
 import se.thinkcode.gold.mine.model.Position;
 import se.thinkcode.gold.mine.model.View;
 
@@ -28,6 +30,12 @@ public class GoldMineGameTest {
             X H X
             X   E
             XXXXX
+            """);
+
+    private final Level level3 = new Level("""
+            XHXX
+            XG E
+            XXXX
             """);
 
     @Test
@@ -214,5 +222,105 @@ public class GoldMineGameTest {
         View actual = goldMine.getView(3, 4);
 
         assertThat(actual).isEqualTo(View.EXIT);
+    }
+
+    @Test
+    void should_see_gold() {
+        GoldMineGame goldMine = new GoldMineGame(level3);
+
+        View actual = goldMine.lookDown();
+
+        assertThat(actual).isEqualTo(View.GOLD);
+    }
+
+    @Test
+    void should_pick_up_gold() {
+        GoldMineGame goldMine = new GoldMineGame(level3);
+        GoldStash initialStash = goldMine.currentGoldStash();
+        assertThat(initialStash.stash()).isEqualTo(0);
+        goldMine.moveDown();
+
+        goldMine.pickUpGold();
+
+        GoldStash actual = goldMine.currentGoldStash();
+        assertThat(actual.stash()).isEqualTo(1);
+    }
+
+    @Test
+    void when_gold_has_been_picked_up_the_gold_is_gone() {
+        GoldMineGame goldMine = new GoldMineGame(level3);
+        goldMine.moveDown();
+
+        goldMine.pickUpGold();
+        goldMine.moveRight();
+
+        View actual = goldMine.lookLeft();
+        assertThat(actual).isEqualTo(View.EMPTY);
+    }
+
+    @Test
+    void should_not_be_able_to_pick_up_gold_if_there_is_no_gold() {
+        GoldMineGame goldMine = new GoldMineGame(level3);
+        goldMine.moveDown();
+        goldMine.moveRight();
+
+        goldMine.pickUpGold();
+
+        GoldStash actual = goldMine.currentGoldStash();
+        assertThat(actual.stash()).isEqualTo(0);
+    }
+
+    @Test
+    void should_be_able_to_empty_stash() {
+        GoldMineGame goldMine = new GoldMineGame(level3);
+        goldMine.moveDown();
+
+        goldMine.pickUpGold();
+
+        GoldStash initialStash = goldMine.currentGoldStash();
+        assertThat(initialStash.stash()).isEqualTo(1);
+
+
+        goldMine.emptyGoldStash();
+
+
+        GoldStash actual = goldMine.currentGoldStash();
+        assertThat(actual.stash()).isEqualTo(1);
+    }
+
+    @Test
+    void should_only_be_able_to_empty_stash_at_home() {
+        GoldMineGame goldMine = new GoldMineGame(level3);
+        goldMine.moveDown();
+        goldMine.pickUpGold();
+        GoldStash initialStash = goldMine.currentGoldStash();
+        assertThat(initialStash.stash()).isEqualTo(1);
+        goldMine.moveUp();
+
+
+        goldMine.emptyGoldStash();
+
+
+        GoldStash actual = goldMine.currentGoldStash();
+        assertThat(actual.stash()).isEqualTo(0);
+    }
+
+    @Test
+    void should_get_one_point_per_gold_when_emptying_gold_at_home() {
+        GoldMineGame goldMine = new GoldMineGame(level3);
+        Points initialPoints = goldMine.currentPoints();
+        assertThat(initialPoints.points()).isEqualTo(0);
+
+
+        goldMine.moveDown();
+        goldMine.pickUpGold();
+        goldMine.moveUp();
+
+
+        goldMine.emptyGoldStash();
+
+
+        Points actual = goldMine.currentPoints();
+        assertThat(actual.points()).isEqualTo(1);
     }
 }

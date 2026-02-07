@@ -2,6 +2,7 @@ package se.thinkcode.gold.mine.model;
 
 public enum ViewType {
     WALL('X'),
+    GOLD('G'),
     EXIT('E'),
     HOME('H'),
     EMPTY(' ');
@@ -22,6 +23,9 @@ public enum ViewType {
         }
         if (c == 'E') {
             return EXIT;
+        }
+        if (c == 'G') {
+            return GOLD;
         }
         if (c == 'H') {
             return HOME;

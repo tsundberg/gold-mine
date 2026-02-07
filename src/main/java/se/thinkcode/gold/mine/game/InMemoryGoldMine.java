@@ -1,5 +1,7 @@
 package se.thinkcode.gold.mine.game;
 
+import se.thinkcode.gold.mine.model.GoldStash;
+import se.thinkcode.gold.mine.model.Points;
 import se.thinkcode.gold.mine.model.Position;
 import se.thinkcode.gold.mine.model.View;
 
@@ -58,5 +60,25 @@ public class InMemoryGoldMine implements GoldMine {
     @Override
     public View lookDown() {
         return game.lookDown();
+    }
+
+    @Override
+    public void pickUpGold() {
+        game.pickUpGold();
+    }
+
+    @Override
+    public void emptyGoldStash() {
+        game.emptyGoldStash();
+    }
+
+    @Override
+    public GoldStash currentGoldStash() {
+        return game.currentGoldStash();
+    }
+
+    @Override
+    public Points currentPoints() {
+        return game.currentPoints();
     }
 }

@@ -1,6 +1,8 @@
 package se.thinkcode.gold.mine.game;
 
 import org.junit.jupiter.api.Test;
+import se.thinkcode.gold.mine.model.GoldStash;
+import se.thinkcode.gold.mine.model.Points;
 import se.thinkcode.gold.mine.model.Position;
 import se.thinkcode.gold.mine.model.View;
 
@@ -124,5 +126,35 @@ public class InMemoryGoldMineTest {
         Position actual = goldMine.currentPosition();
 
         assertThat(actual).isEqualTo(new Position(3, 2));
+    }
+
+    @Test
+    void should_pick_up_gold_and_empty_stash_at_home_and_get_one_point() {
+        Level level = new Level("""
+                XHXX
+                XG E
+                XXXX
+                """);
+        GoldMineGame game = new GoldMineGame(level);
+        GoldMine goldMine = new InMemoryGoldMine(game);
+        goldMine.moveDown();
+
+        goldMine.pickUpGold();
+
+        goldMine.moveUp();
+
+        GoldStash actualGoldStash = goldMine.currentGoldStash();
+        assertThat(actualGoldStash.stash()).isEqualTo(1);
+
+        Points actualPoints = goldMine.currentPoints();
+        assertThat(actualPoints.points()).isEqualTo(0);
+
+        goldMine.emptyGoldStash();
+
+        actualGoldStash = goldMine.currentGoldStash();
+        assertThat(actualGoldStash.stash()).isEqualTo(0);
+
+        actualPoints = goldMine.currentPoints();
+        assertThat(actualPoints.points()).isEqualTo(1);
     }
 }
