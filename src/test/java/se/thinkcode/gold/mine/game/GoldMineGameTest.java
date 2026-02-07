@@ -1,10 +1,7 @@
 package se.thinkcode.gold.mine.game;
 
 import org.junit.jupiter.api.Test;
-import se.thinkcode.gold.mine.model.GoldStash;
-import se.thinkcode.gold.mine.model.Points;
-import se.thinkcode.gold.mine.model.Position;
-import se.thinkcode.gold.mine.model.View;
+import se.thinkcode.gold.mine.model.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

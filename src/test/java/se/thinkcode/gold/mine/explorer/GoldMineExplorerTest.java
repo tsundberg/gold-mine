@@ -8,7 +8,7 @@ import se.thinkcode.gold.mine.explorer.naive.NaiveExplorer;
 import se.thinkcode.gold.mine.game.GoldMine;
 import se.thinkcode.gold.mine.game.GoldMineGame;
 import se.thinkcode.gold.mine.game.InMemoryGoldMine;
-import se.thinkcode.gold.mine.game.Level;
+import se.thinkcode.gold.mine.model.Level;
 import se.thinkcode.gold.mine.model.Position;
 import se.thinkcode.gold.mine.model.View;
 
