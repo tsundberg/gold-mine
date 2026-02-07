@@ -21,7 +21,7 @@ public class InMemoryGoldMineTest {
             XXXXX
             """);
 
-    private final Player player = new Player();
+    private final Player player = new Player("mas");
 
     @Test
     void should_delegate_current_position() {

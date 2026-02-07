@@ -106,7 +106,7 @@ public class GoldMineExplorerTest {
             XXXXXXXEXXXXXX
             """);
 
-    private final Player player = new Player();
+    private final Player player = new Player("mas");
 
     @Test
     void should_got_to_exit_level_one() {

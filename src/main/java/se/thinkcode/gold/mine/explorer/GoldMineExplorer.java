@@ -10,7 +10,7 @@ import java.util.List;
 
 public class GoldMineExplorer {
     private final GoldMine goldMine;
-    private final Player player = new Player();
+    private final Player player = new Player("mas");
     private Position exit = null;
     private View[][] map = null;
     private int mineWidth = -1;

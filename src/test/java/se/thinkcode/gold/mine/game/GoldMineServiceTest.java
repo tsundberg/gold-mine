@@ -17,7 +17,7 @@ class GoldMineServiceTest {
                 XXX
                 """);
         GoldMineGame game = new GoldMineGame(level);
-        Player player = new Player();
+        Player player = new Player("mas");
 
         GoldMineService service = new GoldMineService();
         service.add(player, game);
