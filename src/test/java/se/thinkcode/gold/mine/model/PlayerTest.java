@@ -12,7 +12,10 @@ class PlayerTest {
     @NullAndEmptySource
     @ValueSource(strings = {"  ", "\t"})
     void should_reject_invalid_name(String name) {
-        assertThatThrownBy(() -> new Player(name))
-                .isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() ->
+                new Player(name)
+        )
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Name must not be empty");
     }
 }
