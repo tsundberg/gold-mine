@@ -21,12 +21,14 @@ public class InMemoryGoldMineTest {
             XXXXX
             """);
 
+    private final Player player = new Player();
+
     @Test
     void should_delegate_current_position() {
         GoldMineGame game = new GoldMineGame(level0);
         GoldMine goldMine = new InMemoryGoldMine(game);
 
-        Position actual = goldMine.currentPosition();
+        Position actual = goldMine.currentPosition(player);
 
         assertThat(actual).isEqualTo(new Position(1, 1));
     }
@@ -36,7 +38,7 @@ public class InMemoryGoldMineTest {
         GoldMineGame game = new GoldMineGame(level0);
         GoldMine goldMine = new InMemoryGoldMine(game);
 
-        View actual = goldMine.look();
+        View actual = goldMine.look(player);
 
         assertThat(actual).isEqualTo(View.HOME);
     }
@@ -46,7 +48,7 @@ public class InMemoryGoldMineTest {
         GoldMineGame game = new GoldMineGame(level0);
         GoldMine goldMine = new InMemoryGoldMine(game);
 
-        View actual = goldMine.lookUp();
+        View actual = goldMine.lookUp(player);
 
         assertThat(actual).isEqualTo(View.WALL);
     }
@@ -56,7 +58,7 @@ public class InMemoryGoldMineTest {
         GoldMineGame game = new GoldMineGame(level0);
         GoldMine goldMine = new InMemoryGoldMine(game);
 
-        View actual = goldMine.lookDown();
+        View actual = goldMine.lookDown(player);
 
         assertThat(actual).isEqualTo(View.WALL);
     }
@@ -66,7 +68,7 @@ public class InMemoryGoldMineTest {
         GoldMineGame game = new GoldMineGame(level0);
         GoldMine goldMine = new InMemoryGoldMine(game);
 
-        View actual = goldMine.lookLeft();
+        View actual = goldMine.lookLeft(player);
 
         assertThat(actual).isEqualTo(View.WALL);
     }
@@ -76,7 +78,7 @@ public class InMemoryGoldMineTest {
         GoldMineGame game = new GoldMineGame(level0);
         GoldMine goldMine = new InMemoryGoldMine(game);
 
-        View actual = goldMine.lookRight();
+        View actual = goldMine.lookRight(player);
 
         assertThat(actual).isEqualTo(View.WALL);
     }
@@ -86,8 +88,8 @@ public class InMemoryGoldMineTest {
         GoldMineGame game = new GoldMineGame(level1);
         GoldMine goldMine = new InMemoryGoldMine(game);
 
-        goldMine.moveUp();
-        Position actual = goldMine.currentPosition();
+        goldMine.moveUp(player);
+        Position actual = goldMine.currentPosition(player);
 
         assertThat(actual).isEqualTo(new Position(2, 1));
     }
@@ -97,8 +99,8 @@ public class InMemoryGoldMineTest {
         GoldMineGame game = new GoldMineGame(level1);
         GoldMine goldMine = new InMemoryGoldMine(game);
 
-        goldMine.moveDown();
-        Position actual = goldMine.currentPosition();
+        goldMine.moveDown(player);
+        Position actual = goldMine.currentPosition(player);
 
         assertThat(actual).isEqualTo(new Position(2, 3));
     }
@@ -108,8 +110,8 @@ public class InMemoryGoldMineTest {
         GoldMineGame game = new GoldMineGame(level1);
         GoldMine goldMine = new InMemoryGoldMine(game);
 
-        goldMine.moveLeft();
-        Position actual = goldMine.currentPosition();
+        goldMine.moveLeft(player);
+        Position actual = goldMine.currentPosition(player);
 
         assertThat(actual).isEqualTo(new Position(1, 2));
     }
@@ -119,8 +121,8 @@ public class InMemoryGoldMineTest {
         GoldMineGame game = new GoldMineGame(level1);
         GoldMine goldMine = new InMemoryGoldMine(game);
 
-        goldMine.moveRight();
-        Position actual = goldMine.currentPosition();
+        goldMine.moveRight(player);
+        Position actual = goldMine.currentPosition(player);
 
         assertThat(actual).isEqualTo(new Position(3, 2));
     }
@@ -134,24 +136,24 @@ public class InMemoryGoldMineTest {
                 """);
         GoldMineGame game = new GoldMineGame(level);
         GoldMine goldMine = new InMemoryGoldMine(game);
-        goldMine.moveDown();
+        goldMine.moveDown(player);
 
-        goldMine.pickUpGold();
+        goldMine.pickUpGold(player);
 
-        goldMine.moveUp();
+        goldMine.moveUp(player);
 
-        GoldStash actualGoldStash = goldMine.currentGoldStash();
+        GoldStash actualGoldStash = goldMine.currentGoldStash(player);
         assertThat(actualGoldStash.stash()).isEqualTo(1);
 
-        Points actualPoints = goldMine.currentPoints();
+        Points actualPoints = goldMine.currentPoints(player);
         assertThat(actualPoints.points()).isEqualTo(0);
 
-        goldMine.emptyGoldStash();
+        goldMine.emptyGoldStash(player);
 
-        actualGoldStash = goldMine.currentGoldStash();
+        actualGoldStash = goldMine.currentGoldStash(player);
         assertThat(actualGoldStash.stash()).isEqualTo(0);
 
-        actualPoints = goldMine.currentPoints();
+        actualPoints = goldMine.currentPoints(player);
         assertThat(actualPoints.points()).isEqualTo(1);
     }
 }

@@ -1,6 +1,7 @@
 package se.thinkcode.gold.mine.explorer;
 
 import se.thinkcode.gold.mine.game.GoldMine;
+import se.thinkcode.gold.mine.model.Player;
 import se.thinkcode.gold.mine.model.Position;
 import se.thinkcode.gold.mine.model.View;
 
@@ -9,6 +10,7 @@ import java.util.List;
 
 public class GoldMineExplorer {
     private final GoldMine goldMine;
+    private final Player player = new Player();
     private Position exit = null;
     private View[][] map = null;
     private int mineWidth = -1;
@@ -27,34 +29,34 @@ public class GoldMineExplorer {
     }
 
     public Position up() {
-        goldMine.moveUp();
-        return goldMine.currentPosition();
+        goldMine.moveUp(player);
+        return goldMine.currentPosition(player);
     }
 
     public Position down() {
-        goldMine.moveDown();
-        return goldMine.currentPosition();
+        goldMine.moveDown(player);
+        return goldMine.currentPosition(player);
     }
 
     public Position right() {
-        goldMine.moveRight();
-        return goldMine.currentPosition();
+        goldMine.moveRight(player);
+        return goldMine.currentPosition(player);
     }
 
     public Position left() {
-        goldMine.moveLeft();
-        return goldMine.currentPosition();
+        goldMine.moveLeft(player);
+        return goldMine.currentPosition(player);
     }
 
     public void look() {
-        Position position = goldMine.currentPosition();
-        View view = goldMine.look();
+        Position position = goldMine.currentPosition(player);
+        View view = goldMine.look(player);
         updateMap(position, view);
     }
 
     public View lookUp() {
-        View view = goldMine.lookUp();
-        Position position = goldMine.currentPosition();
+        View view = goldMine.lookUp(player);
+        Position position = goldMine.currentPosition(player);
         Position upPosition = getUpPosition(position);
         updateMap(upPosition, view);
 
@@ -66,13 +68,13 @@ public class GoldMineExplorer {
     }
 
     public View lookRight() {
-        Position position = goldMine.currentPosition();
+        Position position = goldMine.currentPosition(player);
         if (mineWidth > 0 && position.x() + 1 >= mineWidth) {
             return null;
         }
 
         try {
-            View view = goldMine.lookRight();
+            View view = goldMine.lookRight(player);
             Position rightPosition = getRightPosition(position);
             updateMap(rightPosition, view);
             return view;
@@ -87,8 +89,8 @@ public class GoldMineExplorer {
     }
 
     public View lookLeft() {
-        View view = goldMine.lookLeft();
-        Position position = goldMine.currentPosition();
+        View view = goldMine.lookLeft(player);
+        Position position = goldMine.currentPosition(player);
         Position leftPosition = getLeftPosition(position);
         updateMap(leftPosition, view);
 
@@ -100,13 +102,13 @@ public class GoldMineExplorer {
     }
 
     public View lookDown() {
-        Position position = goldMine.currentPosition();
+        Position position = goldMine.currentPosition(player);
         if (mineHeight > 0 && position.y() + 1 >= mineHeight) {
             return null;
         }
 
         try {
-            View view = goldMine.lookDown();
+            View view = goldMine.lookDown(player);
             Position downPosition = getDownPosition(position);
             updateMap(downPosition, view);
             return view;
@@ -240,7 +242,7 @@ public class GoldMineExplorer {
     }
 
     public Position currentPosition() {
-        return goldMine.currentPosition();
+        return goldMine.currentPosition(player);
     }
 
     static String clearScreen() {

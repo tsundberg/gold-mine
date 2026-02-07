@@ -1,36 +1,34 @@
 package se.thinkcode.gold.mine.game;
 
-import se.thinkcode.gold.mine.model.GoldStash;
-import se.thinkcode.gold.mine.model.Points;
-import se.thinkcode.gold.mine.model.Position;
-import se.thinkcode.gold.mine.model.View;
+import se.thinkcode.gold.mine.model.*;
 
 public interface GoldMine {
-    Position currentPosition();
+    Position currentPosition(Player player);
 
-    void moveUp();
+    void moveUp(Player player);
 
-    void moveDown();
+    void moveDown(Player player);
 
-    void moveRight();
+    void moveRight(Player player);
 
-    void moveLeft();
+    void moveLeft(Player player);
 
-    View look();
+    View look(Player player);
 
-    View lookUp();
+    View lookUp(Player player);
 
-    View lookRight();
+    View lookRight(Player player);
 
-    View lookLeft();
+    View lookLeft(Player player);
 
-    View lookDown();
+    View lookDown(Player player);
 
-    void pickUpGold();
+    void pickUpGold(Player player);
 
-    void emptyGoldStash();
+    void emptyGoldStash(Player player);
 
-    GoldStash currentGoldStash();
+    GoldStash currentGoldStash(Player player);
 
-    Points currentPoints();
+    Points currentPoints(Player player);
+
 }
