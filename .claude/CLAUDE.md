@@ -44,8 +44,10 @@ Never write production code without a failing test that demands it. Never skip t
 before writing the implementation. The TDD cycle for new code takes priority over keeping all other tests green. It is
 acceptable for existing tests to temporarily not compile while you are in the red phase.
 
-**Review gate:** Before writing or changing a test, present it to the user with a short motivation explaining *why* the
-test is needed. Wait for approval before proceeding to the green phase. Do this for every TDD cycle.
+**Review gate:** NEVER write or modify test code without explicit user approval. Before writing or changing any test,
+present the test to the user with a short motivation explaining *why* the test is needed. Then STOP and wait for the
+user to approve before writing any code. This applies to every TDD cycle and to every test file change, including
+updates to existing tests.
 
 ## Code Style
 
