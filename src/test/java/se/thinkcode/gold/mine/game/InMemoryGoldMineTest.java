@@ -26,7 +26,7 @@ public class InMemoryGoldMineTest {
     @Test
     void should_delegate_current_position() {
         GoldMineGame game = new GoldMineGame(level0);
-        GoldMine goldMine = new InMemoryGoldMine(game);
+        GoldMine goldMine = createGoldMine(game);
 
         Position actual = goldMine.currentPosition(player);
 
@@ -36,7 +36,7 @@ public class InMemoryGoldMineTest {
     @Test
     void should_delegate_look() {
         GoldMineGame game = new GoldMineGame(level0);
-        GoldMine goldMine = new InMemoryGoldMine(game);
+        GoldMine goldMine = createGoldMine(game);
 
         View actual = goldMine.look(player);
 
@@ -46,7 +46,7 @@ public class InMemoryGoldMineTest {
     @Test
     void should_delegate_look_up() {
         GoldMineGame game = new GoldMineGame(level0);
-        GoldMine goldMine = new InMemoryGoldMine(game);
+        GoldMine goldMine = createGoldMine(game);
 
         View actual = goldMine.lookUp(player);
 
@@ -56,7 +56,7 @@ public class InMemoryGoldMineTest {
     @Test
     void should_delegate_look_down() {
         GoldMineGame game = new GoldMineGame(level0);
-        GoldMine goldMine = new InMemoryGoldMine(game);
+        GoldMine goldMine = createGoldMine(game);
 
         View actual = goldMine.lookDown(player);
 
@@ -66,7 +66,7 @@ public class InMemoryGoldMineTest {
     @Test
     void should_delegate_look_left() {
         GoldMineGame game = new GoldMineGame(level0);
-        GoldMine goldMine = new InMemoryGoldMine(game);
+        GoldMine goldMine = createGoldMine(game);
 
         View actual = goldMine.lookLeft(player);
 
@@ -76,7 +76,7 @@ public class InMemoryGoldMineTest {
     @Test
     void should_delegate_look_right() {
         GoldMineGame game = new GoldMineGame(level0);
-        GoldMine goldMine = new InMemoryGoldMine(game);
+        GoldMine goldMine = createGoldMine(game);
 
         View actual = goldMine.lookRight(player);
 
@@ -86,7 +86,7 @@ public class InMemoryGoldMineTest {
     @Test
     void should_delegate_move_up() {
         GoldMineGame game = new GoldMineGame(level1);
-        GoldMine goldMine = new InMemoryGoldMine(game);
+        GoldMine goldMine = createGoldMine(game);
 
         goldMine.moveUp(player);
         Position actual = goldMine.currentPosition(player);
@@ -97,7 +97,7 @@ public class InMemoryGoldMineTest {
     @Test
     void should_delegate_move_down() {
         GoldMineGame game = new GoldMineGame(level1);
-        GoldMine goldMine = new InMemoryGoldMine(game);
+        GoldMine goldMine = createGoldMine(game);
 
         goldMine.moveDown(player);
         Position actual = goldMine.currentPosition(player);
@@ -108,7 +108,7 @@ public class InMemoryGoldMineTest {
     @Test
     void should_delegate_move_left() {
         GoldMineGame game = new GoldMineGame(level1);
-        GoldMine goldMine = new InMemoryGoldMine(game);
+        GoldMine goldMine = createGoldMine(game);
 
         goldMine.moveLeft(player);
         Position actual = goldMine.currentPosition(player);
@@ -119,7 +119,7 @@ public class InMemoryGoldMineTest {
     @Test
     void should_delegate_move_right() {
         GoldMineGame game = new GoldMineGame(level1);
-        GoldMine goldMine = new InMemoryGoldMine(game);
+        GoldMine goldMine = createGoldMine(game);
 
         goldMine.moveRight(player);
         Position actual = goldMine.currentPosition(player);
@@ -135,7 +135,7 @@ public class InMemoryGoldMineTest {
                 XXXX
                 """);
         GoldMineGame game = new GoldMineGame(level);
-        GoldMine goldMine = new InMemoryGoldMine(game);
+        GoldMine goldMine = createGoldMine(game);
         goldMine.moveDown(player);
 
         goldMine.pickUpGold(player);
@@ -155,5 +155,11 @@ public class InMemoryGoldMineTest {
 
         actualPoints = goldMine.currentPoints(player);
         assertThat(actualPoints.points()).isEqualTo(1);
+    }
+
+    private GoldMine createGoldMine(GoldMineGame game) {
+        GoldMineService service = new GoldMineService();
+        service.add(player, game);
+        return new InMemoryGoldMine(service);
     }
 }

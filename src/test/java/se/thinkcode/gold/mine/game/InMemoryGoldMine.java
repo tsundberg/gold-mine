@@ -3,79 +3,79 @@ package se.thinkcode.gold.mine.game;
 import se.thinkcode.gold.mine.model.*;
 
 public class InMemoryGoldMine implements GoldMine {
-    private final GoldMineGame game;
+    private final GoldMine goldMine;
 
-    public InMemoryGoldMine(GoldMineGame game) {
-        this.game = game;
+    public InMemoryGoldMine(GoldMine goldMine) {
+        this.goldMine = goldMine;
     }
 
     @Override
     public Position currentPosition(Player player) {
-        return game.currentPosition();
+        return goldMine.currentPosition(player);
     }
 
     @Override
     public void moveUp(Player player) {
-        game.moveUp();
+        goldMine.moveUp(player);
     }
 
     @Override
     public void moveDown(Player player) {
-        game.moveDown();
+        goldMine.moveDown(player);
     }
 
     @Override
     public void moveRight(Player player) {
-        game.moveRight();
+        goldMine.moveRight(player);
     }
 
     @Override
     public void moveLeft(Player player) {
-        game.moveLeft();
+        goldMine.moveLeft(player);
     }
 
     @Override
     public View look(Player player) {
-        return game.look();
+        return goldMine.look(player);
     }
 
     @Override
     public View lookUp(Player player) {
-        return game.lookUp();
+        return goldMine.lookUp(player);
     }
 
     @Override
     public View lookRight(Player player) {
-        return game.lookRight();
+        return goldMine.lookRight(player);
     }
 
     @Override
     public View lookLeft(Player player) {
-        return game.lookLeft();
+        return goldMine.lookLeft(player);
     }
 
     @Override
     public View lookDown(Player player) {
-        return game.lookDown();
+        return goldMine.lookDown(player);
     }
 
     @Override
     public void pickUpGold(Player player) {
-        game.pickUpGold();
+        goldMine.pickUpGold(player);
     }
 
     @Override
     public void emptyGoldStash(Player player) {
-        game.emptyGoldStash();
+        goldMine.emptyGoldStash(player);
     }
 
     @Override
     public GoldStash currentGoldStash(Player player) {
-        return game.currentGoldStash();
+        return goldMine.currentGoldStash(player);
     }
 
     @Override
     public Points currentPoints(Player player) {
-        return game.currentPoints();
+        return goldMine.currentPoints(player);
     }
 }
